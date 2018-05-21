@@ -1,0 +1,31 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    background-color: #222222;
+    font-size: 20px;
+    color: whitesmoke;
+}
+
+ul {
+    list-style: none;
+    margin: 0 0 0 2rem;
+    padding: 2.2rem;
+  
+   
+}
+
+img {
+    display: block;
+    width: 100%;
+}
+
+@supports(display: grid) {
+    .pics {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        justify-content: center;
+        align-items: stretch;
+    }
+}
