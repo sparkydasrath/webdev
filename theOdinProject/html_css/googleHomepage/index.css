@@ -7,7 +7,7 @@
   .layoutRoot {
     display: flex;
     flex-flow: column nowrap;
-    height: 100vh;
+    height: calc(100vh - 40px);
   }
   
   /* NAVIGATION */
