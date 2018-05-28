@@ -1,0 +1,40 @@
+@import "simpleGridGallery.css";
+/* layout */
+
+.spannedGrid ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 10px;
+}
+
+.spannedGridDense ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 10px;
+    grid-auto-flow: dense;
+}
+
+.span2Across {
+    grid-column: auto / span 2; 
+}
+
+.span2Down {
+    grid-row: auto / span 2;
+}
+
+.span4 {
+    grid-column: auto / span 2;  
+    grid-row: auto / span 2;
+}
+
+.fullAcross {
+    grid-column: 1 / -1;
+}
+
+/* styles */
+
+img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}

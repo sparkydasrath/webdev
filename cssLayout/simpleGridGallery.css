@@ -1,31 +1,33 @@
+/*layout*/
+
 * {
     box-sizing: border-box;
 }
 
+.simpleGrid ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 0.5fr));
+    grid-gap: 5px;
+}
+
+/* styling */
+
 html {
     background-color: #222222;
     font-size: 20px;
-    color: whitesmoke;
+    color: rgb(221, 221, 221);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 ul {
     list-style: none;
-    margin: 0 0 0 2rem;
+    margin: 2px;
+    ;
     padding: 2.2rem;
-  
-   
 }
 
 img {
     display: block;
     width: 100%;
-}
-
-@supports(display: grid) {
-    .pics {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        justify-content: center;
-        align-items: stretch;
-    }
+    height: 100%;
 }
