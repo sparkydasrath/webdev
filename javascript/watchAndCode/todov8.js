@@ -1,5 +1,4 @@
-var todoList = 
-{
+var todoList = {
     todos: [],
     totalCompleted: 0,
     displayTodos: function () {
@@ -52,23 +51,24 @@ var todoList =
 };
 
 
-todoList.addToDo('first');
-todoList.addToDo('second');
+// todoList.addToDo('first');
+// todoList.addToDo('second');
 
-var handlers = 
-{
-    displayTodos: function () {
-        todoList.displayTodos();
-    },
-    toggleAll: function()
-    {
+var todoContainer = document.getElementById('todoContainer');
+
+var handlers = {
+    // displayTodos: function () {
+    //     todoList.displayTodos();
+    // },
+    toggleAll: function () {
         todoList.toggleAll();
+        view.displayTodos();
     },
-    addToDo: function()
-    {
+    addToDo: function () {
         var todoTextInput = document.getElementById('addTodoTextInput');
         todoList.addToDo(todoTextInput.value);
         todoTextInput.value = '';
+        view.displayTodos();
     },
     changeTodo: function () {
         var positionInput = document.getElementById('changeTodoPositionInput');
@@ -80,18 +80,37 @@ var handlers =
 
         positionInput.value = '';
         newTextInput.value = '';
+        view.displayTodos();
     },
-    deleteTodo: function (){
+    deleteTodo: function () {
         var itemToDeleteElement = document.getElementById('todoToDeleteTextInput');
         var position = itemToDeleteElement.valueAsNumber;
         todoList.deleteTodo(position);
+        view.displayTodos();
     },
-    deleteTodo: function (){
-        var itemToComplete = document.getElementById('todoToDeleteTextInput');
+    toggleCompleted: function () {
+        var itemToComplete = document.getElementById('todoToggleCompleteTextInput');
         var position = itemToComplete.valueAsNumber;
         todoList.toggleCompleted(position);
 
         itemToComplete.value = '';
+        view.displayTodos();
     }
 }
 
+var view = {
+    displayTodos: function () {
+
+        var todoUl = document.querySelector('ul');
+        todoUl.innerHTML = '';
+        for (var i = 0; i < todoList.todos.length; i++) {
+            var todoLi = document.createElement('li');
+            var todoTextAndCompletion = '';
+            if (todoList.todos[i].completed) todoTextAndCompletion = '(x) ' + todoList.todos[i].todoText;
+            else todoTextAndCompletion = '( ) ' + todoList.todos[i].todoText;
+            todoLi.textContent = todoTextAndCompletion;
+            todoUl.appendChild(todoLi);
+        }
+
+    }
+}

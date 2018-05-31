@@ -19,9 +19,27 @@
         <button onclick="handlers.addToDo()">Add</button>
          <input id="addTodoTextInput" type="text">
      </div>
+
+     <div>
+         <button onclick="handlers.changeTodo()">Change todo</button>
+        <input id="changeTodoPositionInput" type="number">
+        <input id="changeTodoTextInput" type="text">
+        </div>
+
+    </div>
+    <div>
+        <br/>
+        <h3>toggle complete</h3>
+        <button onclick="handlers.toggleCompleted()">Toggle Item at Position</button>
+        <input id="todoToggleCompleteTextInput" type="number">
     </div>
 
-    <script src="todov7.js"></script>
+    <div>
+        <h3>items</h3>
+        <ul id="todoContainer"></ul>
+    </div>
+
+    <script src="todov10.js"></script>
 
 </body>
 
