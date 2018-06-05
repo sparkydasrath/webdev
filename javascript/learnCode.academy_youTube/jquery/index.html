@@ -12,6 +12,7 @@
 <body>
 
     <div class="col-xs-3">
+        <button class="b1">Simple button</button>
         <div id="panel4" class="panel panel-primary">
             <div class="panel-heading"></div>
             <div class="panel-body"></div>
@@ -19,13 +20,14 @@
     </div>
 
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script>
-        $(function(){
+    <script src="jQueryPlay.js"></script>
 
-            $('.panel-heading').fadeOut(1000);
-
+    <!-- <script>
+        $(function () {
+            $('.b1').on('click', (e) => $('.panel-body').html(e.target));
         });
-    </script>
+    </script> -->
+
 </body>
 
 </html>
