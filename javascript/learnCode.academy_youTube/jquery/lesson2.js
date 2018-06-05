@@ -6,4 +6,3 @@ function handleClick(e )
 {
     $('.panel-body').hide();
 }
-
