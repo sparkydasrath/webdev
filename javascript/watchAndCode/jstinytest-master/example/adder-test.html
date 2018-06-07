@@ -1,16 +1,31 @@
 <script src="../tinytest.js"></script>
-<script src="adder.js"></script>
 <script>
-tests({
+  function forEach(array, callback) {
+    for (let i = 0; i < array.length; i++) {
+      callback(array[i]);
+    }
+  }
 
-  'adds numbers': function() {
-    eq(6, add(2, 4));
-    eq(6.6, add(2.6, 4));
-  },
+  tests({
 
-  'subtracts numbers': function() {
-    eq(-2, add(2, -4));
-  },
+    'It should run the callback array.length times': function () {
+      var counter = 0;
 
-});
+      forEach([1, 2, 3], () => {
+        counter++;
+        console.log('fu');
+      });
+
+      eq(counter, 3);
+    },
+
+    'It should pass in the iTH element as the first argument to the callback': function () {
+      forEach([1], (num) => {
+        eq(num, 1);
+      });
+
+     
+    }
+
+  });
 </script>
