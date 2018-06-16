@@ -8,6 +8,7 @@ let itemId = -1;
 
 // basic top level list of todos
 let todoList = [];
+let completedTodoList = [];
 
 // =================================================================
 
@@ -16,6 +17,7 @@ let addTodoButton = document.getElementById("add-todo");
 let deleteTodoButton = document.getElementById("delete-todo");
 let inputTextbox = document.getElementById("input-text");
 let listItems = document.getElementById("list-items");
+let completedListItems = document.getElementById("completed-list-items");
 let diag = document.getElementById("diag");
 
 subscribeToEvents();
@@ -36,17 +38,27 @@ function createTodoItem(id, text) {
     return new TodoItem(id, text);
 }
 
-function createHtmlElementForTodoItem(todoItem) {
+function createHtmlElementForTodoItem(todoItem, isCompleted) {
     // div to hold todo text & delete button
     let tdDiv = document.createElement("div");
+    tdDiv.className = "todo-item-container";
     let content = document.createTextNode(todoItem.todoText);
+    tdDiv.appendChild(content);
+
+    // complete button
+    // only add this if isCompleted is false
+
+    if (!isCompleted) {
+        let completeButton = document.createElement("button");
+        completeButton.setAttribute("id", "completeTodoItem" + todoItem.id);
+        completeButton.innerHTML = "complete";
+        tdDiv.appendChild(completeButton);
+    }
 
     // delete button
     let deleteButton = document.createElement("button");
     deleteButton.setAttribute("id", "todoItem" + todoItem.id);
     deleteButton.innerHTML = "X";
-
-    tdDiv.appendChild(content);
     tdDiv.appendChild(deleteButton);
 
     // actual list item added to the unorderd list
@@ -63,9 +75,10 @@ function subscribeToEvents() {
     // event handlers
     addTodoButton.addEventListener("click", handleAddTodoButtonOnClick);
     listItems.addEventListener("click", handleListItemClicked);
+    completedListItems.addEventListener("click", handleListItemClicked);
 }
 
-function handleAddTodoButtonOnClick(eventArgs) {
+function handleAddTodoButtonOnClick() {
 
     // increment the counter
     // by virtue of this design, each id will match the correct index in the array used to store items, so deleting will be simple
@@ -74,7 +87,7 @@ function handleAddTodoButtonOnClick(eventArgs) {
     let todoItemToAdd = createTodoItem(itemId, getTodoText());
     todoList.push(todoItemToAdd);
 
-    displayListItems(todoList);
+    displayTodoListItems(todoList);
     clearInput(inputTextbox);
 }
 
@@ -82,11 +95,50 @@ function handleListItemClicked(eventArgs) {
 
     let originButton = eventArgs.target;
     let originButtonId = originButton["id"];
-    let sliceStart = "todoItem".length;
-    let actualId = Number(originButtonId.slice(sliceStart));
 
-    removeItemFromListById(actualId, todoList);
-    displayListItems(todoList);
+    // 3 cases to handle:
+    //  1. just the container was clicked, do nothing
+    //  2. complete button clicked, mark as complete, remove from main todo list, move to completed list
+    //  3. delete button clicked, immediately remove item from list
+
+    if (originButtonId === "") return;
+
+    else if (originButtonId.startsWith("complete")) {
+        let sliceStart = "completeTodoItem".length;
+        let actualId = Number(originButtonId.slice(sliceStart));
+        let completedItem = markTodoItemAsComplete(actualId, todoList, completedTodoList);
+        removeItemFromListById(actualId, todoList);
+        addCompletedTodoItemToCompletedList(completedItem);
+    } else {
+
+        // delete button is hit, very messy here, don't like this one bit 
+        let sliceStart = "todoItem".length;
+        let actualId = Number(originButtonId.slice(sliceStart));
+        removeItemFromListById(actualId, todoList);
+    }
+
+    displayTodoListItems(todoList);
+    displayCompletedTodoListItems(completedTodoList);
+}
+
+function markTodoItemAsComplete(idOfItemToComplete, listToCompleteFrom, listToMoveCompletedTo) {
+    if (listToCompleteFrom.length === 0) return;
+
+    let ctdi = null;
+
+    for (let i = 0; i < listToCompleteFrom.length; i++) {
+        ctdi = listToCompleteFrom[i];
+
+        if (ctdi.id === idOfItemToComplete) {
+            ctdi.isCompleted = true;
+        }
+    }
+
+    return ctdi;
+}
+
+function addCompletedTodoItemToCompletedList(completedTodoItem) {
+    completedTodoList.push(completedTodoItem);
 }
 
 function removeItemFromListById(idOfItemToRemove, listToRemoveFrom) {
@@ -105,12 +157,20 @@ function clearInput(inputElement) {
     inputElement.value = "";
 }
 
-function displayListItems(listToShow) {
-
+function displayTodoListItems(todoListToShow) {
     listItems.innerHTML = "";
 
-    for (let i = 0; i < listToShow.length; i++) {
-        const tdi = listToShow[i];
-        listItems.appendChild(createHtmlElementForTodoItem(tdi));
+    for (let i = 0; i < todoListToShow.length; i++) {
+        const tdi = todoListToShow[i];
+        listItems.appendChild(createHtmlElementForTodoItem(tdi, tdi.isCompleted));
+    }
+}
+
+function displayCompletedTodoListItems(completedTodoListToShow) {
+    completedListItems.innerHTML = "";
+
+    for (let i = 0; i < completedTodoListToShow.length; i++) {
+        const tdi = completedTodoListToShow[i];
+        completedListItems.appendChild(createHtmlElementForTodoItem(tdi, tdi.isCompleted));
     }
 }

@@ -15,3 +15,8 @@ button {
     margin-left: 1em;
     margin-right: 1em;
 }
+
+.todo-item-container{
+    background-color: lightgray;
+    padding: 0.25em;
+}
