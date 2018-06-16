@@ -6,3 +6,12 @@ body {
     display: flex;
     margin: 1em;
 }
+
+ul li {
+  list-style: none ;
+}
+
+button {
+    margin-left: 1em;
+    margin-right: 1em;
+}
