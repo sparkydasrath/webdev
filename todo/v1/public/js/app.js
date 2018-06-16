@@ -75,7 +75,7 @@ function subscribeToEvents() {
     // event handlers
     addTodoButton.addEventListener("click", handleAddTodoButtonOnClick);
     listItems.addEventListener("click", handleListItemClicked);
-    completedListItems.addEventListener("click", handleListItemClicked);
+    completedListItems.addEventListener("click", handleCompletedListItemClicked);
 }
 
 function handleAddTodoButtonOnClick() {
@@ -119,6 +119,15 @@ function handleListItemClicked(eventArgs) {
 
     displayTodoListItems(todoList);
     displayCompletedTodoListItems(completedTodoList);
+}
+
+function handleCompletedListItemClicked(eventArgs) {
+    let originButton = eventArgs.target;
+    let originButtonId = originButton["id"];
+
+    let sliceStart = "completeTodoItem".length;
+    let actualId = Number(originButtonId.slice(sliceStart));
+    removeItemFromListById(actualId, completedTodoList);
 }
 
 function markTodoItemAsComplete(idOfItemToComplete, listToCompleteFrom, listToMoveCompletedTo) {
