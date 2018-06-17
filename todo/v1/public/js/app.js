@@ -8,7 +8,6 @@ let itemId = -1;
 
 // basic top level list of todos
 let todoList = [];
-let completedTodoList = [];
 
 // =================================================================
 
@@ -17,7 +16,6 @@ let addTodoButton = document.getElementById("add-todo");
 let deleteTodoButton = document.getElementById("delete-todo");
 let inputTextbox = document.getElementById("input-text");
 let listItems = document.getElementById("list-items");
-let completedListItems = document.getElementById("completed-list-items");
 let diag = document.getElementById("diag");
 
 subscribeToEvents();
@@ -53,6 +51,8 @@ function createHtmlElementForTodoItem(todoItem, isCompleted) {
         completeButton.setAttribute("id", "completeTodoItem" + todoItem.id);
         completeButton.innerHTML = "complete";
         tdDiv.appendChild(completeButton);
+    } else {
+        tdDiv.className += " done";
     }
 
     // delete button
@@ -73,13 +73,17 @@ function getTodoText() {
 
 function subscribeToEvents() {
     // event handlers
-    addTodoButton.addEventListener("click", handleAddTodoButtonOnClick);
     listItems.addEventListener("click", handleListItemClicked);
-    completedListItems.addEventListener("click", handleCompletedListItemClicked);
+    inputTextbox.addEventListener("keyup", handleInputTextBoxKeyUp);
 }
 
-function handleAddTodoButtonOnClick() {
+function handleInputTextBoxKeyUp(eventArgs) {
+    if (eventArgs.key.toLowerCase() === "enter" && inputTextbox.value != "") {
+        addTodoItem();
+    }
+}
 
+function addTodoItem() {
     // increment the counter
     // by virtue of this design, each id will match the correct index in the array used to store items, so deleting will be simple
     itemId++;
@@ -94,44 +98,26 @@ function handleAddTodoButtonOnClick() {
 function handleListItemClicked(eventArgs) {
 
     let originButton = eventArgs.target;
-    let originButtonId = originButton["id"];
+    let originButtonId = originButton.id;
 
-    // 3 cases to handle:
-    //  1. just the container was clicked, do nothing
-    //  2. complete button clicked, mark as complete, remove from main todo list, move to completed list
-    //  3. delete button clicked, immediately remove item from list
-
-    if (originButtonId === "") return;
-
-    else if (originButtonId.startsWith("complete")) {
+    if (originButtonId.startsWith("completeTodoItem")) {
         let sliceStart = "completeTodoItem".length;
         let actualId = Number(originButtonId.slice(sliceStart));
-        let completedItem = markTodoItemAsComplete(actualId, todoList, completedTodoList);
-        removeItemFromListById(actualId, todoList);
-        addCompletedTodoItemToCompletedList(completedItem);
-    } else {
+        markTodoItemAsComplete(actualId, todoList);
 
-        // delete button is hit, very messy here, don't like this one bit 
+    } else if (originButtonId.startsWith("todoItem")) {
         let sliceStart = "todoItem".length;
         let actualId = Number(originButtonId.slice(sliceStart));
         removeItemFromListById(actualId, todoList);
     }
 
     displayTodoListItems(todoList);
-    displayCompletedTodoListItems(completedTodoList);
 }
 
-function handleCompletedListItemClicked(eventArgs) {
-    let originButton = eventArgs.target;
-    let originButtonId = originButton["id"];
-
-    let sliceStart = "completeTodoItem".length;
-    let actualId = Number(originButtonId.slice(sliceStart));
-    removeItemFromListById(actualId, completedTodoList);
-}
-
-function markTodoItemAsComplete(idOfItemToComplete, listToCompleteFrom, listToMoveCompletedTo) {
-    if (listToCompleteFrom.length === 0) return;
+function markTodoItemAsComplete(idOfItemToComplete, listToCompleteFrom) {
+    if (listToCompleteFrom.length === 0) {
+        return
+    };
 
     let ctdi = null;
 
@@ -146,12 +132,12 @@ function markTodoItemAsComplete(idOfItemToComplete, listToCompleteFrom, listToMo
     return ctdi;
 }
 
-function addCompletedTodoItemToCompletedList(completedTodoItem) {
-    completedTodoList.push(completedTodoItem);
-}
+function addCompletedTodoItemToCompletedList(completedTodoItem) {}
 
 function removeItemFromListById(idOfItemToRemove, listToRemoveFrom) {
-    if (listToRemoveFrom.length === 0) return;
+    if (listToRemoveFrom.length === 0) {
+        return
+    };
 
     for (let i = 0; i < listToRemoveFrom.length; i++) {
         const tdi = listToRemoveFrom[i];
@@ -172,14 +158,5 @@ function displayTodoListItems(todoListToShow) {
     for (let i = 0; i < todoListToShow.length; i++) {
         const tdi = todoListToShow[i];
         listItems.appendChild(createHtmlElementForTodoItem(tdi, tdi.isCompleted));
-    }
-}
-
-function displayCompletedTodoListItems(completedTodoListToShow) {
-    completedListItems.innerHTML = "";
-
-    for (let i = 0; i < completedTodoListToShow.length; i++) {
-        const tdi = completedTodoListToShow[i];
-        completedListItems.appendChild(createHtmlElementForTodoItem(tdi, tdi.isCompleted));
     }
 }

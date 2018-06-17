@@ -17,6 +17,9 @@ button {
 }
 
 .todo-item-container{
-    background-color: lightgray;
     padding: 0.25em;
+}
+
+.done {
+    background-color: darkgray;
 }
