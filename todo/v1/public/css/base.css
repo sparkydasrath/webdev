@@ -18,8 +18,13 @@ button {
 
 .todo-item-container{
     padding: 0.25em;
+    border-bottom: 1px solid lightgray;
 }
 
 .done {
     background-color: darkgray;
+}
+
+input {
+    box-shadow: 1px 1px black;
 }

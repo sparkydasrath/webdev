@@ -16,7 +16,8 @@ let addTodoButton = document.getElementById("add-todo");
 let deleteTodoButton = document.getElementById("delete-todo");
 let inputTextbox = document.getElementById("input-text");
 let listItems = document.getElementById("list-items");
-let diag = document.getElementById("diag");
+let deleteAll = document.getElementById("delete-all");
+let deleteAllCompleted = document.getElementById("delete-all-completed");
 
 subscribeToEvents();
 
@@ -75,6 +76,8 @@ function subscribeToEvents() {
     // event handlers
     listItems.addEventListener("click", handleListItemClicked);
     inputTextbox.addEventListener("keyup", handleInputTextBoxKeyUp);
+    deleteAll.addEventListener("click", handleDeleteAll);
+    deleteAllCompleted.addEventListener("click", handledeleteAllCompleted);
 }
 
 function handleInputTextBoxKeyUp(eventArgs) {
@@ -108,9 +111,31 @@ function handleListItemClicked(eventArgs) {
     } else if (originButtonId.startsWith("todoItem")) {
         let sliceStart = "todoItem".length;
         let actualId = Number(originButtonId.slice(sliceStart));
-        removeItemFromListById(actualId, todoList);
+        deleteItemFromListById(actualId, todoList);
     }
 
+    displayTodoListItems(todoList);
+}
+
+function handleDeleteAll() {
+    if (todoList.length === 0) {
+        return;
+    }
+
+    todoList = [];
+    listItems.innerHTML = "";
+}
+
+function handledeleteAllCompleted() {
+    let itemsToKeep = [];
+    for (let i = 0; i < todoList.length; i++) {
+        let tdi = todoList[i];
+        if (!tdi.isCompleted) {
+            itemsToKeep.push(tdi);
+        }
+    }
+
+    todoList = itemsToKeep;
     displayTodoListItems(todoList);
 }
 
@@ -134,7 +159,7 @@ function markTodoItemAsComplete(idOfItemToComplete, listToCompleteFrom) {
 
 function addCompletedTodoItemToCompletedList(completedTodoItem) {}
 
-function removeItemFromListById(idOfItemToRemove, listToRemoveFrom) {
+function deleteItemFromListById(idOfItemToRemove, listToRemoveFrom) {
     if (listToRemoveFrom.length === 0) {
         return
     };
@@ -153,6 +178,7 @@ function clearInput(inputElement) {
 }
 
 function displayTodoListItems(todoListToShow) {
+
     listItems.innerHTML = "";
 
     for (let i = 0; i < todoListToShow.length; i++) {
