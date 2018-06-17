@@ -18,6 +18,8 @@ let inputTextbox = document.getElementById("input-text");
 let listItems = document.getElementById("list-items");
 let deleteAll = document.getElementById("delete-all");
 let deleteAllCompleted = document.getElementById("delete-all-completed");
+let showHideCompleted = document.getElementById("show-hide-completed");
+let countsElement = document.getElementById("counts");
 
 subscribeToEvents();
 
@@ -78,6 +80,7 @@ function subscribeToEvents() {
     inputTextbox.addEventListener("keyup", handleInputTextBoxKeyUp);
     deleteAll.addEventListener("click", handleDeleteAll);
     deleteAllCompleted.addEventListener("click", handledeleteAllCompleted);
+    showHideCompleted.addEventListener("click", handleShowHideCompleted)
 }
 
 function handleInputTextBoxKeyUp(eventArgs) {
@@ -173,6 +176,25 @@ function deleteItemFromListById(idOfItemToRemove, listToRemoveFrom) {
     }
 }
 
+function getCounts(todoListToCountFrom) {
+    let completed = 0;
+    let notCompleted = 0;
+
+    for (let i = 0; i < todoListToCountFrom.length; i++) {
+        const tdi = todoListToCountFrom[i];
+        if (tdi.isCompleted) {
+            completed++;
+        } else {
+            notCompleted++;
+        }
+    }
+    return {
+        completed: completed,
+        notComplete: notCompleted,
+        total: todoListToCountFrom.length
+    };
+}
+
 function clearInput(inputElement) {
     inputElement.value = "";
 }
@@ -184,5 +206,31 @@ function displayTodoListItems(todoListToShow) {
     for (let i = 0; i < todoListToShow.length; i++) {
         const tdi = todoListToShow[i];
         listItems.appendChild(createHtmlElementForTodoItem(tdi, tdi.isCompleted));
+    }
+
+    let counts = getCounts(todoListToShow);
+    updateCounts(counts);
+}
+
+function updateCounts(counts) {
+    countsElement.innerHTML = "";
+    countsElement.innerHTML = "Total: " + counts.total + "\tCompleted: " + counts.completed + "\tNot Complete: " + counts.notComplete;
+}
+
+function handleShowHideCompleted() {
+    let childrenOfUl = listItems.childNodes;
+    for (let i = 0; i < childrenOfUl.length; i++) {
+        let liElement = childrenOfUl[i];
+
+        // get the first child of the li
+        let liContainingDiv = liElement.childNodes[0];
+        let divClassName = liContainingDiv.className;
+
+        if (divClassName === "todo-item-container done hide") {
+            liContainingDiv.className = "todo-item-container done";
+        }
+        if (divClassName === "todo-item-container done") {
+            liContainingDiv.className = "todo-item-container done hide";
+        }
     }
 }

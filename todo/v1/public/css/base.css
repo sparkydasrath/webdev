@@ -25,6 +25,10 @@ button {
     background-color: darkgray;
 }
 
+.hide {
+    display: none;
+}
+
 input {
     box-shadow: 1px 1px black;
 }
