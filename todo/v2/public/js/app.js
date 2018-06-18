@@ -33,8 +33,8 @@
     }
 
     let todos = {
-        // todoItems: [],
-        todoItems: generateSampleTodos(),
+        todoItems: [],
+        // todoItems: generateSampleTodos(),
         init: function () {
             this.cacheDom();
             this.bindEvents();
@@ -66,9 +66,31 @@
                 this.listItems.appendChild(this.createHtmlElementForTodoItem(tdi, tdi.isCompleted));
             }
 
-            // let counts = getCounts(todoListToShow);
-            // updateCounts(counts);
+            let counts = this.getCounts();
+            this.updateCounts(counts);
 
+        },
+        getCounts: function () {
+            let completed = 0;
+            let notCompleted = 0;
+
+            for (let i = 0; i < this.todoItems.length; i++) {
+                const tdi = this.todoItems[i];
+                if (tdi.isCompleted) {
+                    completed++;
+                } else {
+                    notCompleted++;
+                }
+            }
+            return {
+                completed: completed,
+                notComplete: notCompleted,
+                total: this.todoItems.length
+            };
+        },
+        updateCounts: function (counts) {
+            this.countsElement.innerHTML = "";
+            this.countsElement.innerHTML = "Total: " + counts.total + "\tCompleted: " + counts.completed + "\tNot Complete: " + counts.notComplete;
         },
         handleInputTextBoxKeyUp: function (eventArgs) {
             if (eventArgs.key.toLowerCase() === "enter" && this.inputTextbox.value != "") {
@@ -90,11 +112,9 @@
                 if (!tdi.isCompleted) {
                     itemsToKeep.push(tdi);
                 }
-
             }
 
             this.todoItems = itemsToKeep;
-
             this.render();
         },
         handleShowHideCompleted: function () {
@@ -149,33 +169,39 @@
             this.render();
         },
         markTodoItemAsComplete: function (idToComplete) {
+
+            let tdi = this.getTodoItemById(idToComplete);
+            if (tdi !== null && tdi.item !== null) {
+                tdi.item.isCompleted = true;
+            }
+        },
+        deleteItemFromListById: function (idToDelete) {
+
+            let tdi = this.getTodoItemById(idToDelete);
+            if (tdi !== null && tdi.item !== null) {
+                this.todoItems.splice(tdi.index, 1);
+            }
+        },
+        getTodoItemById: function (id) {
             if (this.todoItems.length === 0) {
                 return
+            };
+
+            let tdi = {
+                item: null,
+                index: 0
             };
 
             for (let i = 0; i < this.todoItems.length; i++) {
                 let ctdi = this.todoItems[i];
 
-                if (ctdi.id === idToComplete) {
-                    ctdi.isCompleted = true;
+                if (ctdi.id === id) {
+                    tdi.item = ctdi;
+                    tdi.index = i;
+                    return tdi;
                 }
             }
         },
-        deleteItemFromListById: function (idToDelete) {
-            if (this.todoItems.length === 0) {
-                return
-            };
-
-            for (let i = 0; i < this.todoItems.length; i++) {
-                const tdi = this.todoItems[i];
-
-                if (tdi.id === idToDelete) {
-                    this.todoItems.splice(i, 1);
-                }
-            }
-
-        },
-
         createHtmlElementForTodoItem: function (todoItem, isCompleted) {
             // div to hold todo text & delete button
             let tdDiv = document.createElement("div");
@@ -209,5 +235,4 @@
     }
 
     todos.init();
-
 })();
