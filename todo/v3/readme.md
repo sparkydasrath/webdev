@@ -1,6 +1,6 @@
 # TODO Version 3
 
-Tasks are tracked on [Trello](https://trello.com/b/gDP9gqeL) 
+Tasks are tracked on [Trello](https://trello.com/b/8moSOcow) 
 
 I will be using just HTML, CSS and JS to create the main functionality. Using [TodoMvc](http://todomvc.com/examples/) as the rough idea.
 
@@ -13,4 +13,4 @@ This was accomplished by a complete refactor using the Module Pattern to organiz
 ### Addendum
 Call it version 3.5. 
 
-After refactoring v2 to v3, it still felt a bit off. After doing some research, it seems a tweak of the v2 would give me the form I am looking for at this stage. 
+After refactoring v2 to v3, it still felt a bit off. After doing some [research](https://medium.com/@jrschwane/writing-modular-javascript-pt-1-b42a3bd23685), it seems a tweak of the v2 would give me the form I am looking for at this stage. 
