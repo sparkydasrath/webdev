@@ -11,20 +11,22 @@
 
 <body>
 
-    <div class="list-container">
+    <div class="todo-container">
         <input type="text" id="input-text" placeholder="enter todo item">
         <div id="list-commands"></div>
-        <ul id="list-items"></ul>
+        <ul id="todo-items"></ul>
     </div>
     <div id="actions">
         <button id="delete-all-completed">Delete completed</button>
         <button id="delete-all">Delete all </button>
         <button id="show-hide-completed">Show/Hide completed</button>
     </div>
+
     <div id="command-bar">
         <div id="counts"></div>    
-     
     </div>
+
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../public/js/Todo.js"></script>
     <script src="../public/js/app.js"></script>
 </body>

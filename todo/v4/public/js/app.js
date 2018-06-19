@@ -1,3 +1,5 @@
-(function(){
-    Todo.init();   
-})()
+$(document).ready(
+    (function () {
+        Todo.init();
+    })()
+)
