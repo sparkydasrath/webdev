@@ -1,4 +1,4 @@
-# TODO Version 2
+# TODO Version 3
 
 Tasks are tracked on [Trello](https://trello.com/b/gDP9gqeL) 
 
@@ -9,3 +9,8 @@ V1 was just a naive implementation - globals, referencing the DOM all over the J
 V2 will be about modularizing the existing app, making it more maintainable. 
 
 This was accomplished by a complete refactor using the Module Pattern to organize the original code. It additionally provided opportunity to delete unnecessary parts of the original cdde base and consolidate repeating code (DRY it!).
+
+### Addendum
+Call it version 3.5. 
+
+After refactoring v2 to v3, it still felt a bit off. After doing some research, it seems a tweak of the v2 would give me the form I am looking for at this stage. 
