@@ -41,8 +41,8 @@ let Todo = (function () {
     function cacheDom() {
         // using jQuery
         DOM.$todoContainer = $(".todo-container");
-        DOM.$input = DOM.$todoContainer.find('#input-text'); 
-        DOM.$todoItems= DOM.$todoContainer.find("#todo-items");
+        DOM.$input = DOM.$todoContainer.find('#input-text');
+        DOM.$todoItems = DOM.$todoContainer.find("#todo-items");
 
         DOM.$actions = $("#actions");
         DOM.$deleteAll = DOM.$actions.find("#delete-all");
@@ -54,7 +54,6 @@ let Todo = (function () {
 
     // bind events
     function bindEvents() {
-
         DOM.$todoItems.on("click", handleListItemClicked);
         DOM.$input.on("keyup", handleInputTextBoxKeyUp);
         DOM.$deleteAll.on("click", handleDeleteAll);
@@ -62,47 +61,46 @@ let Todo = (function () {
         DOM.$showHideCompleted.on("click", handleShowHideCompleted);
     }
 
-
     // render
     function render() {
-        updateHtmlOfElement(DOM.$todoItems, "");
+
+        DOM.$todoItems.empty();
 
         for (let i = 0; i < todoItems.length; i++) {
             const tdi = todoItems[i];
-            DOM.$todoItems.append(createHtmlElementForTodoItem(tdi, tdi.isCompleted));
+            let $li = createHtmlElementForTodoItem(tdi, tdi.isCompleted);
+            DOM.$todoItems.append($li.html());
         }
-
         let counts = getCounts();
         updateCounts(counts);
     }
 
     function createHtmlElementForTodoItem(todoItem, isCompleted) {
         // div to hold todo text & delete button
-        let tdDiv = document.createElement("div");
-        tdDiv.className = "todo-item-container";
-        let content = document.createTextNode(todoItem.todoText);
-        tdDiv.appendChild(content);
+
+        let $tdDiv = $("<div></div>")
+            .addClass("todo-item-container")
+            .text(todoItem.todoText);
 
         // complete button
         if (!isCompleted) {
-            let completeButton = document.createElement("button");
-            completeButton.setAttribute("id", "completeTodoItem" + todoItem.id);
-            completeButton.innerHTML = "complete";
-            tdDiv.appendChild(completeButton);
+            let $completeButton = $("<button>complete</button>")
+                .attr("id", "completeTodoItem" + todoItem.id);
+            $tdDiv.append($completeButton);
         } else {
-            tdDiv.className += " done";
+            let cn = $tdDiv.attr("class");
+            let d = cn += " done";
+            $tdDiv.attr("class", d);
         }
 
         // delete button
-        let deleteButton = document.createElement("button");
-        deleteButton.setAttribute("id", "todoItem" + todoItem.id);
-        deleteButton.innerHTML = "X";
-        tdDiv.appendChild(deleteButton);
+        let $deleteButton = $("<button>X</button>")
+            .attr("id", "todoItem" + todoItem.id);
+        $tdDiv.append($deleteButton);
 
-        // actual list item added to the unorderd list
-        let listItem = document.createElement("li");
-        listItem.appendChild(tdDiv);
-        return listItem;
+        let $listItem = $("<li></li>");
+        $listItem.append($tdDiv);
+        return $listItem;
     }
 
     function getCounts() {
@@ -165,8 +163,7 @@ let Todo = (function () {
         render();
     }
 
-    function updateHtmlOfElement(elementToUpdate, htmlStringToUse)
-    {
+    function updateHtmlOfElement(elementToUpdate, htmlStringToUse) {
         elementToUpdate.html(htmlStringToUse);
     }
 
