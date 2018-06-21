@@ -234,7 +234,7 @@ let Todo = (function () {
     }
 
     function handleShowHideCompleted() {
-        let childrenOfUl = DOM.listItems.childNodes;
+        let childrenOfUl = DOM.$todoItems.childNodes;
         for (let i = 0; i < childrenOfUl.length; i++) {
             let liElement = childrenOfUl[i];
 
