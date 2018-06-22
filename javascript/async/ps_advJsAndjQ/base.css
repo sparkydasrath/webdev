@@ -1,0 +1,24 @@
+#container {
+    display: flex;
+}
+
+#section1,
+#section2,
+#section3 {
+    background-color: lightgray;
+    width: 200px;
+    height: 200px;
+    border: 1px solid darkgray;
+    overflow-y: auto;
+    margin: 10px;
+}
+
+#proceeed {
+    width: 100px;
+}
+
+#messages {
+    width: 630px;
+    height: 200px;
+    overflow-y: auto;
+}
