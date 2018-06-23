@@ -1,14 +1,14 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;    
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-#actions{
+#actions {
     display: flex;
     margin: 1em;
 }
 
 ul li {
-  list-style: none ;
+    list-style: none;
 }
 
 button {
@@ -16,17 +16,13 @@ button {
     margin-right: 1em;
 }
 
-.todo-item-container{
+.todo-item-container {
     padding: 0.25em;
     border-bottom: 1px solid lightgray;
 }
 
 .done {
     background-color: darkgray;
-}
-
-.hide {
-    display: none;
 }
 
 input {

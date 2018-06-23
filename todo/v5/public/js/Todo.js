@@ -69,7 +69,7 @@ let Todo = (function () {
         for (let i = 0; i < todoItems.length; i++) {
             const tdi = todoItems[i];
             let $li = createHtmlElementForTodoItem(tdi, tdi.isCompleted);
-            DOM.$todoItems.append($li.html());
+            DOM.$todoItems.append($li);
         }
         let counts = getCounts();
         updateCounts(counts);
@@ -234,21 +234,7 @@ let Todo = (function () {
     }
 
     function handleShowHideCompleted() {
-        let childrenOfUl = DOM.$todoItems.childNodes;
-        for (let i = 0; i < childrenOfUl.length; i++) {
-            let liElement = childrenOfUl[i];
-
-            // get the first child of the li
-            let liContainingDiv = liElement.childNodes[0];
-            let divClassName = liContainingDiv.className;
-
-            if (divClassName === "todo-item-container done hide") {
-                liContainingDiv.className = "todo-item-container done";
-            }
-            if (divClassName === "todo-item-container done") {
-                liContainingDiv.className = "todo-item-container done hide";
-            }
-        }
+        $("div.done").toggle();
     }
 
     function handledeleteAllCompleted() {
