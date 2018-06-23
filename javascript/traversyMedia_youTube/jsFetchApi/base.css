@@ -1,0 +1,30 @@
+#nav {
+    display: flex;
+    padding: 0.25em;
+    margin: 0.25em;
+    flex-flow: row nowrap;
+}
+
+button {
+    width: 150px;
+    margin: 0.25em;
+}
+
+ul {
+    list-style: none;
+}
+
+ul>li:first-child {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 1.25em;
+}
+
+ul:last-child {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1em;
+}
+
+#post {
+    background-color: whitesmoke;
+}
