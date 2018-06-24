@@ -3,8 +3,7 @@ let Todo = (function () {
     "use strict";
 
     // DOM placeholder
-    let DOM = {}
-
+    let DOM = {};
     let todoItems = [];
     const maxSeed = 500;
     // let todoItems = generateSampleTodos();
@@ -45,6 +44,7 @@ let Todo = (function () {
         DOM.$todoItems = DOM.$todoContainer.find("#todo-items");
 
         DOM.$todoItemTemplate = DOM.$todoContainer.find("#todoItemTemplate");
+        DOM.$todoItemContainer = DOM.$todoContainer.find("#todoItemContainer");
 
         DOM.$actions = $("#actions");
         DOM.$deleteAll = DOM.$actions.find("#delete-all");
@@ -54,9 +54,15 @@ let Todo = (function () {
         DOM.$counts = $("#command-bar").find("#counts");
     }
 
+    function updateCachedDom() {
+        // need to do this as we add/remove items from this container
+        DOM.$todoItemContainer = DOM.$todoContainer.find("#todoItemContainer");
+    }
+
     // bind events
     function bindEvents() {
-        DOM.$todoItems.on("click", handleListItemClicked);
+        // DOM.$todoItems.on("click", handleListItemClicked);
+        DOM.$todoItemContainer.on("click", handleListItemClicked);
         DOM.$input.on("keyup", handleInputTextBoxKeyUp);
         DOM.$deleteAll.on("click", handleDeleteAll);
         DOM.$deleteCompleted.on("click", handledeleteAllCompleted);
@@ -66,14 +72,14 @@ let Todo = (function () {
     // render
     function render() {
 
-        DOM.$todoItems.empty();
+        // DOM.$todoItems.empty();
 
-        for (let i = 0; i < todoItems.length; i++) {
-            const tdi = todoItems[i];
+        // for (let i = 0; i < todoItems.length; i++) {
+        //     const tdi = todoItems[i];
 
-            let $li = createHtmlElementForTodoItem(tdi, tdi.isCompleted);
-            DOM.$todoItems.append($li);
-        }
+        //     let $li = createHtmlElementForTodoItem(tdi, tdi.isCompleted);
+        //     DOM.$todoItems.append($li);
+        // }
 
         // handlebars version
         createHtml(todoItems);
@@ -196,6 +202,11 @@ let Todo = (function () {
     }
 
     function handleListItemClicked(eventArgs) {
+
+        let ind = DOM.$todoItemContainer.index(this);
+        let ind2 = $(this).index();
+        let ind3 = $(".todo-item-container").index();
+
 
         let originButton = eventArgs.target;
         let originButtonId = originButton.id;

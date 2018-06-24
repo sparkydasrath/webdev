@@ -22,13 +22,20 @@
 
         <hr>
         <script id="todoItemTemplate" type="text/x-handlebars-template">
-            {{#each this}}
-            <div class="todo-item-container2">
-                {{todoText}}
+            {{#each this}} {{#if isCompleted}}
+
+            <div class="todo-item-container done">
+                <span>{{todoText}}</span>
+                <button>Delete</button>
+            </div>
+            {{else}}
+            <div class="todo-item-container">
+                <span>{{todoText}}</span>
                 <button>Complete</button>
                 <button>Delete</button>
             </div>
-            {{/each}}
+
+            {{/if}} {{/each}}
         </script>
     </div>
 

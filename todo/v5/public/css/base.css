@@ -24,7 +24,7 @@ button {
 .todo-item-container2 {
     padding: 0.25em;
     border-bottom: 1px solid lightgray;
-    background-color: gray;
+    /* background-color: gray; */
 }
 
 .done {
