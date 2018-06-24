@@ -44,6 +44,8 @@ let Todo = (function () {
         DOM.$input = DOM.$todoContainer.find('#input-text');
         DOM.$todoItems = DOM.$todoContainer.find("#todo-items");
 
+        DOM.$todoItemTemplate = DOM.$todoContainer.find("#todoItemTemplate");
+
         DOM.$actions = $("#actions");
         DOM.$deleteAll = DOM.$actions.find("#delete-all");
         DOM.$deleteCompleted = DOM.$actions.find("#delete-all-completed");
@@ -68,11 +70,27 @@ let Todo = (function () {
 
         for (let i = 0; i < todoItems.length; i++) {
             const tdi = todoItems[i];
+
             let $li = createHtmlElementForTodoItem(tdi, tdi.isCompleted);
             DOM.$todoItems.append($li);
         }
+
+        // handlebars version
+        createHtml(todoItems);
+
+        // update counts
         let counts = getCounts();
         updateCounts(counts);
+    }
+
+    function createHtml(todoItemsToRender) {
+
+        let rawTemplate = DOM.$todoItemTemplate.html();
+        let compiledTemplate = Handlebars.compile(rawTemplate);
+        let generatedHtml = compiledTemplate(todoItemsToRender);
+
+        let totoItemContainer = document.getElementById("todoItemContainer");
+        totoItemContainer.innerHTML = generatedHtml;
     }
 
     function createHtmlElementForTodoItem(todoItem, isCompleted) {

@@ -21,6 +21,12 @@ button {
     border-bottom: 1px solid lightgray;
 }
 
+.todo-item-container2 {
+    padding: 0.25em;
+    border-bottom: 1px solid lightgray;
+    background-color: gray;
+}
+
 .done {
     background-color: darkgray;
 }
