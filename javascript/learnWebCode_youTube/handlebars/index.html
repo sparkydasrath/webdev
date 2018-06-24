@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Handlebars Playground</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
+    <link rel="stylesheet" href="base.css">
+</head>
+
+<body>
+    <div class="page-wrap">
+        <h1>Handlebars Tutorial</h1>
+        <div id="pets-container"></div>
+    </div>
+
+    <script id="petsTemplate" type="text/x-handlebars-template">
+        {{#each pets}}
+        <div class="pet">
+            <div class="phote-column">
+                <img src="{{photo}}" />
+            </div>
+            <div class="info-column">
+                <h2>{{name}}
+                    <span class="species">({{species}})</span>
+                </h2>
+
+                {{#if favFoods}}
+                <h4 class="headline-bar">Favorite Foods</h4>
+                <ul class="favorite-foods">
+                    {{#each favFoods}}
+                    <li>{{{this}}}</li>
+                    {{/each}}
+                </ul>
+                {{/if}}
+
+            </div>
+        </div>
+        {{/each}}
+    </script>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
