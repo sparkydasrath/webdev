@@ -6,6 +6,8 @@ let Todo = (function () {
     let DOM = {};
     let todoItems = [];
     const maxSeed = 500;
+    const deleteButtonClass = "delete";
+    const completeButtonClass = "complete";
     // let todoItems = generateSampleTodos();
 
     function TodoItem(id, todoText) {
@@ -41,28 +43,18 @@ let Todo = (function () {
         // using jQuery
         DOM.$todoContainer = $(".todo-container");
         DOM.$input = DOM.$todoContainer.find('#input-text');
-        DOM.$todoItems = DOM.$todoContainer.find("#todo-items");
-
+        DOM.$todoItemsContainer = DOM.$todoContainer.find("#todo-items-container");
         DOM.$todoItemTemplate = DOM.$todoContainer.find("#todoItemTemplate");
-        DOM.$todoItemContainer = DOM.$todoContainer.find("#todoItemContainer");
-
         DOM.$actions = $("#actions");
         DOM.$deleteAll = DOM.$actions.find("#delete-all");
         DOM.$deleteCompleted = DOM.$actions.find("#delete-all-completed");
         DOM.$showHideCompleted = DOM.$actions.find("#show-hide-completed");
-
         DOM.$counts = $("#command-bar").find("#counts");
-    }
-
-    function updateCachedDom() {
-        // need to do this as we add/remove items from this container
-        DOM.$todoItemContainer = DOM.$todoContainer.find("#todoItemContainer");
     }
 
     // bind events
     function bindEvents() {
-        // DOM.$todoItems.on("click", handleListItemClicked);
-        DOM.$todoItemContainer.on("click", handleListItemClicked);
+        DOM.$todoItemsContainer.on("click", handleListItemClicked);
         DOM.$input.on("keyup", handleInputTextBoxKeyUp);
         DOM.$deleteAll.on("click", handleDeleteAll);
         DOM.$deleteCompleted.on("click", handledeleteAllCompleted);
@@ -71,15 +63,6 @@ let Todo = (function () {
 
     // render
     function render() {
-
-        // DOM.$todoItems.empty();
-
-        // for (let i = 0; i < todoItems.length; i++) {
-        //     const tdi = todoItems[i];
-
-        //     let $li = createHtmlElementForTodoItem(tdi, tdi.isCompleted);
-        //     DOM.$todoItems.append($li);
-        // }
 
         // handlebars version
         createHtml(todoItems);
@@ -95,36 +78,8 @@ let Todo = (function () {
         let compiledTemplate = Handlebars.compile(rawTemplate);
         let generatedHtml = compiledTemplate(todoItemsToRender);
 
-        let totoItemContainer = document.getElementById("todoItemContainer");
-        totoItemContainer.innerHTML = generatedHtml;
-    }
-
-    function createHtmlElementForTodoItem(todoItem, isCompleted) {
-        // div to hold todo text & delete button
-
-        let $tdDiv = $("<div></div>")
-            .addClass("todo-item-container")
-            .text(todoItem.todoText);
-
-        // complete button
-        if (!isCompleted) {
-            let $completeButton = $("<button>complete</button>")
-                .attr("id", "completeTodoItem" + todoItem.id);
-            $tdDiv.append($completeButton);
-        } else {
-            let cn = $tdDiv.attr("class");
-            let d = cn += " done";
-            $tdDiv.attr("class", d);
-        }
-
-        // delete button
-        let $deleteButton = $("<button>X</button>")
-            .attr("id", "todoItem" + todoItem.id);
-        $tdDiv.append($deleteButton);
-
-        let $listItem = $("<li></li>");
-        $listItem.append($tdDiv);
-        return $listItem;
+        let todoItemsCont = document.getElementById("todo-items-container");
+        todoItemsCont.innerHTML = generatedHtml;
     }
 
     function getCounts() {
@@ -183,7 +138,6 @@ let Todo = (function () {
             return;
         }
         todoItems = [];
-        updateHtmlOfElement(DOM.$todoItems, "");
         render();
     }
 
@@ -203,63 +157,34 @@ let Todo = (function () {
 
     function handleListItemClicked(eventArgs) {
 
-        let ind = DOM.$todoItemContainer.index(this);
-        let ind2 = $(this).index();
-        let ind3 = $(".todo-item-container").index();
-
-
         let originButton = eventArgs.target;
-        let originButtonId = originButton.id;
 
-        if (originButtonId.startsWith("completeTodoItem")) {
-            let sliceStart = "completeTodoItem".length;
-            let actualId = Number(originButtonId.slice(sliceStart));
-            markTodoItemAsComplete(actualId);
+        if (!(originButton instanceof HTMLButtonElement)) {
+            return;
+        }
 
-        } else if (originButtonId.startsWith("todoItem")) {
-            let sliceStart = "todoItem".length;
-            let actualId = Number(originButtonId.slice(sliceStart));
-            deleteItemFromListById(actualId);
+        let index = $(originButton).parent().index();
+        if (index < 0) {
+            return;
+        }
+
+        if ($(originButton).attr("class") === deleteButtonClass) {
+            deleteTodoByIndex(index);
+        }
+
+        if ($(originButton).attr("class") === completeButtonClass) {
+            markTodoAsCompleteByIndex(index);
         }
 
         render();
     }
 
-    function markTodoItemAsComplete(idToComplete) {
-
-        let tdi = getTodoItemById(idToComplete);
-        if (tdi !== null && tdi.item !== null) {
-            tdi.item.isCompleted = true;
-        }
+    function deleteTodoByIndex(index) {
+        todoItems.splice(index, 1);
     }
 
-    function deleteItemFromListById(idToDelete) {
-
-        let tdi = getTodoItemById(idToDelete);
-        if (tdi !== null && tdi.item !== null) {
-            todoItems.splice(tdi.index, 1);
-        }
-    }
-
-    function getTodoItemById(id) {
-        if (todoItems.length === 0) {
-            return
-        };
-
-        let tdi = {
-            item: null,
-            index: 0
-        };
-
-        for (let i = 0; i < todoItems.length; i++) {
-            let ctdi = todoItems[i];
-
-            if (ctdi.id === id) {
-                tdi.item = ctdi;
-                tdi.index = i;
-                return tdi;
-            }
-        }
+    function markTodoAsCompleteByIndex(index) {
+        todoItems[index].isCompleted = true;
     }
 
     function handleShowHideCompleted() {

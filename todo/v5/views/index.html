@@ -16,9 +16,8 @@
     <div class="todo-container">
         <input type="text" id="input-text" placeholder="enter todo item">
         <div id="list-commands"></div>
-        <ul id="todo-items"></ul>
 
-        <div id="todoItemContainer"></div>
+        <div id="todo-items-container"></div>
 
         <hr>
         <script id="todoItemTemplate" type="text/x-handlebars-template">
@@ -26,13 +25,13 @@
 
             <div class="todo-item-container done">
                 <span>{{todoText}}</span>
-                <button>Delete</button>
+                <button class="delete">Delete</button>
             </div>
             {{else}}
             <div class="todo-item-container">
                 <span>{{todoText}}</span>
-                <button>Complete</button>
-                <button>Delete</button>
+                <button class="complete">Complete</button>
+                <button class="delete">Delete</button>
             </div>
 
             {{/if}} {{/each}}
