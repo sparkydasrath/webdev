@@ -1,6 +1,6 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #252525;
+    /* background-color: #252525; */
 }
 
 #actions {
@@ -17,11 +17,6 @@ ul li {
     list-style: none;
 }
 
-button {
-    width: 150px;
-    margin: auto;
-}
-
 #input-text {
     border-width: 0px;
 }
@@ -32,5 +27,5 @@ button {
 }
 
 .done {
-    background-color: darkgray;
+    /* background-color: darkgray; */
 }

@@ -4,11 +4,11 @@ let Todo = (function () {
 
     // DOM placeholder
     let DOM = {};
-    let todoItems = [];
+    //let todoItems = [];
     const maxSeed = 500;
     const deleteButtonClass = "delete";
     const completeButtonClass = "complete";
-    // let todoItems = generateSampleTodos();
+    let todoItems = generateSampleTodos();
 
     function TodoItem(id, todoText) {
         this.id = id;
