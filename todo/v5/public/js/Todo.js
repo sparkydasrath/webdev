@@ -2,13 +2,15 @@ let Todo = (function () {
 
     "use strict";
 
+    const storageKey = "todo_store";
+
     // DOM placeholder
     let DOM = {};
-    //let todoItems = [];
+    let todoItems = [];
     const maxSeed = 500;
     const deleteButtonClass = "delete";
     const completeButtonClass = "complete";
-    let todoItems = generateSampleTodos();
+    //let todoItems = generateSampleTodos();
 
     function TodoItem(id, todoText) {
         this.id = id;
@@ -17,6 +19,19 @@ let Todo = (function () {
 
         this.toString = function () {
             return this.todoText;
+        }
+    }
+
+    let storage = {
+        save: function (key, value) {
+            if (arguments.length > 1) {
+                localStorage.setItem(key, JSON.stringify(value));
+            }
+        },
+        load: function (key) {
+            console.log("loading ", key);
+            let data = localStorage.getItem(key);
+            return (data && JSON.parse(data)) || [];
         }
     }
 
@@ -70,6 +85,9 @@ let Todo = (function () {
         // update counts
         let counts = getCounts();
         updateCounts(counts);
+
+        // always save after rendering
+        storage.save(storageKey, todoItems);
     }
 
     function createHtml(todoItemsToRender) {
@@ -77,7 +95,6 @@ let Todo = (function () {
         let rawTemplate = DOM.$todoItemTemplate.html();
         let compiledTemplate = Handlebars.compile(rawTemplate);
         let generatedHtml = compiledTemplate(todoItemsToRender);
-
         let todoItemsCont = document.getElementById("todo-items-container");
         todoItemsCont.innerHTML = generatedHtml;
     }
@@ -207,6 +224,7 @@ let Todo = (function () {
     function init() {
         cacheDom();
         bindEvents();
+        todoItems = storage.load(storageKey);
         render();
     }
 
