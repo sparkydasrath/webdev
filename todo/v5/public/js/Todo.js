@@ -168,11 +168,11 @@ let Todo = (function () {
             return;
         }
 
-        if ($(originButton).attr("class") === deleteButtonClass) {
+        if ($(originButton).attr("class").indexOf(deleteButtonClass) > -1) {
             deleteTodoByIndex(index);
-        }
 
-        if ($(originButton).attr("class") === completeButtonClass) {
+        }
+        if ($(originButton).attr("class").indexOf(completeButtonClass) > -1) {
             markTodoAsCompleteByIndex(index);
         }
 
