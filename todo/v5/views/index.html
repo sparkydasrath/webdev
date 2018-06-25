@@ -10,15 +10,16 @@
     <link rel="stylesheet" type="text/css" href="../node_modules/uikit/dist/css/uikit.min.css" />
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/handlebars/dist/handlebars.js"></script>
-    <script src="../node_modules/uikit/dist/js/uikit.min.js"></script>
-    <script src="../node_modules/uikit/dist/js/uikit-icons.min.js"></script>
 </head>
 
 <body>
 
     <div class="rootContainer">
         <div class="todo-container">
-            <input class="uk-input uk-form-width-medium uk-form-large" type="text" id="input-text" placeholder="Enter todo...">
+            <div id="input-text-wrapper">
+                <input type="text" id="input-text" placeholder="Enter to do...">
+            </div>
+
             <div id="list-commands"></div>
 
             <div id="todo-items-container"></div>
@@ -27,14 +28,14 @@
                 {{#each this}} {{#if isCompleted}}
 
                 <div class="todo-item-container done">
-                    <span>{{todoText}}</span>
+                    <span class="todoText">{{todoText}}</span>
                     <button class="delete">
                         delete
                     </button>
                 </div>
                 {{else}}
                 <div class="todo-item-container">
-                    <span>{{todoText}}</span>
+                    <span class="todoText">{{todoText}}</span>
                     <button class="complete">
                         complete
                     </button>
@@ -51,9 +52,9 @@
         <hr>
 
         <div id="actions">
-            <button class="uk-button uk-button-default" id="delete-all-completed">Delete Completed</button>
-            <button class="uk-button uk-button-default" id="delete-all">Delete All </button>
-            <button class="uk-button uk-button-default" id="show-hide-completed">Toggle Completed</button>
+            <button id="delete-all-completed">Delete Completed</button>
+            <button id="delete-all">Delete All </button>
+            <button id="show-hide-completed">Toggle Completed</button>
         </div>
 
         <div id="command-bar">

@@ -7,6 +7,10 @@ body {
     display: flex;
 }
 
+#actions>button {
+    flex: auto;
+}
+
 #counts {
     font-size: 1em;
     color: darkgray;
@@ -17,13 +21,33 @@ ul li {
     list-style: none;
 }
 
+#input-text-wrapper {
+    display: flex;
+    flex: 2px;
+}
+
 #input-text {
-    border-width: 0px;
+    flex: 1;
+    margin-top: 2px;
+    margin-bottom: 8px;
 }
 
 .rootContainer {
     width: 50%;
     margin: auto;
+}
+
+.todo-item-container {
+    display: flex;
+}
+
+.todoText {
+    flex: 1;
+}
+
+.complete,
+.delete {
+    flex: 0.15;
 }
 
 .done {
