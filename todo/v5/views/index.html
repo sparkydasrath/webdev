@@ -13,45 +13,42 @@
 
 <body>
 
-    <div class="todo-container">
-        <input type="text" id="input-text" placeholder="enter todo item">
-        <div id="list-commands"></div>
+    <div class="rootContainer">
+        <div class="todo-container">
+            <input type="text" id="input-text" placeholder="Todo...">
+            <div id="list-commands"></div>
 
-        <div id="todo-items-container"></div>
+            <div id="todo-items-container"></div>
 
-        <hr>
-        <script id="todoItemTemplate" type="text/x-handlebars-template">
-            {{#each this}} {{#if isCompleted}}
+            <hr>
+            <script id="todoItemTemplate" type="text/x-handlebars-template">
+                {{#each this}} {{#if isCompleted}}
 
-            <div class="todo-item-container done">
-                <span>{{todoText}}</span>
-                <button class="delete">Delete</button>
-            </div>
-            {{else}}
-            <div class="todo-item-container">
-                <span>{{todoText}}</span>
-                <button class="complete">Complete</button>
-                <button class="delete">Delete</button>
-            </div>
+                <div class="todo-item-container done">
+                    <span>{{todoText}}</span>
+                    <button class="delete">Delete</button>
+                </div>
+                {{else}}
+                <div class="todo-item-container">
+                    <span>{{todoText}}</span>
+                    <button class="complete">Complete</button>
+                    <button class="delete">Delete</button>
+                </div>
 
-            {{/if}} {{/each}}
-        </script>
+                {{/if}} {{/each}}
+            </script>
+        </div>
+
+        <div id="actions">
+            <button id="delete-all-completed">Delete Completed</button>
+            <button id="delete-all">Delete All </button>
+            <button id="show-hide-completed">Toggle Completed</button>
+        </div>
+
+        <div id="command-bar">
+            <div id="counts"></div>
+        </div>
     </div>
-
-    <br>
-    <br>
-    <hr>
-
-    <div id="actions">
-        <button id="delete-all-completed">Delete completed</button>
-        <button id="delete-all">Delete all </button>
-        <button id="show-hide-completed">Show/Hide completed</button>
-    </div>
-
-    <div id="command-bar">
-        <div id="counts"></div>
-    </div>
-
 
     <script src="../public/js/Todo.js"></script>
     <script src="../public/js/app.js"></script>

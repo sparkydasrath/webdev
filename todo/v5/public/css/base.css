@@ -1,10 +1,16 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #252525;
 }
 
 #actions {
     display: flex;
-    margin: 1em;
+}
+
+#counts {
+    font-size: 1em;
+    color: darkgray;
+    text-align: center;
 }
 
 ul li {
@@ -12,25 +18,19 @@ ul li {
 }
 
 button {
-    margin-left: 1em;
-    margin-right: 1em;
+    width: 150px;
+    margin: auto;
 }
 
-.todo-item-container {
-    padding: 0.25em;
-    border-bottom: 1px solid lightgray;
+#input-text {
+    border-width: 0px;
 }
 
-.todo-item-container2 {
-    padding: 0.25em;
-    border-bottom: 1px solid lightgray;
-    /* background-color: gray; */
+.rootContainer {
+    width: 50%;
+    margin: auto;
 }
 
 .done {
     background-color: darkgray;
-}
-
-input {
-    box-shadow: 1px 1px black;
 }
