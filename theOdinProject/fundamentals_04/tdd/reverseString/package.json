@@ -1,0 +1,15 @@
+{
+  "name": "reverseString",
+  "version": "1.0.0",
+  "description": "Pretty simple, write a function called `reverseString` that returns it's input, reversed!",
+  "main": "reverseString.js",
+  "scripts": {
+    "test": "./node_modules/.bin/jasmine"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jasmine": "^3.1.0"
+  }
+}
