@@ -21,7 +21,7 @@ you have no elements inside the div and is setting the bg of the div*/
 
     /*MULTIPLE IMAGES IN DIV CONTAINER*/
 
-    #multiImgWithFlexBox {
+    #multiImgJustDiv {
         /* display: flex;
         flex-flow: row nowrap;
         align-items: flex-start; */
