@@ -1,0 +1,41 @@
+    /*FULL SCREEN + NO SCROLLBARS
+        this works when you set on the HTML element
+    */
+
+    /* html {
+        background: url(../../images/15.jpg) no-repeat center center fixed;
+        background-size: cover;
+    } */
+
+    /*SINGLE IMAGE AS DIV BG*/
+
+    /* when set on a div, you need to give it dimensions assuming
+you have no elements inside the div and is setting the bg of the div*/
+
+    #bgContainerWithCss {
+        background: url(../../images/15.jpg) no-repeat center center fixed;
+        background-size: cover;
+        width: auto;
+        height: 100vh;
+    }
+
+    /*MULTIPLE IMAGES IN DIV CONTAINER*/
+
+    #multiImgWithFlexBox {
+        /* display: flex;
+        flex-flow: row nowrap;
+        align-items: flex-start; */
+        white-space: nowrap;
+        display: inline-block;
+        height: 200px;
+        overflow-wrap: normal;
+    }
+
+    img {
+        /* max-width: 300px;
+        max-height: 350px; */
+        display: inline-block;
+        width: 200px;
+        height: 150px;
+        object-fit: cover;
+    }
