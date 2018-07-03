@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+body {
+    font-family: 'Roboto Condensed', sans-serif;
+    margin: 0;
+    background-color: #eeeeee;
+    height: auto;
+}
+
+h1 {
+    font-weight: 400;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+h2 {
+    font-weight: 400;
+    font-size: 1.2rem;
+    text-transform: capitalize;
+    margin: 0;
+}
+
+img {
+    display: block;
+    width: 100%;
+}
+
+main {
+    max-width: 900px;
+    margin: auto;
+    box-shadow: 30px 0 40px rgba(0, 0, 0, 0.1), -30px 0 40px rgba(0, 0, 0, 0.1);
+}
+
+#landing {
+    background-color: #ffffff;
+}
+
+#landing-text {
+    display: flex;
+    flex: 0 1 40vw;
+    height: 50vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+#landing-text h2 {
+    columns: #888888;
+}
+
+#landing-image {
+    background: url(https://source.unsplash.com/De8wMYoSSBc);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 50vh;
+    flex: 0 1 60vw;
+    margin: 0;
+}
+
+.btn {
+    padding: 0.5rem 2rem;
+    border: 1px solid #cccccc;
+    display: inline-block;
+    margin: 2rem 0 0;
+    border-radius: 50px;
+    text-decoration: none;
+    color: #333333;
+    transition: background-color 500ms ease;
+}
+
+.btn:hover {
+    background-color: #f4f4f4;
+}
+
+#header {
+    padding: 1.5rem;
+    text-align: center;
+    background-color: #333333;
+    color: #ffffff;
+}
+
+#header h2 {
+    border-left: 1px dotted #ffffff;
+    border-right: 1px dotted #ffffff;
+    display: inline-block;
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+.caption {
+    padding: 0.8rem;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    margin: auto;
+    columns: #333333;
+}
+
+footer h3 {
+    font-size: 3rem;
+    margin-bottom: 0;
+}
+
+/*Screen sizes 500px and up*/
+
+@media(min-width:500px) {
+    #landing {
+        display: flex;
+        height: 100%;
+    }
+    #landing-text,
+    #landing-image {
+        height: 100vh;
+    }
+}
+
+/*Screen sizes 700px and up*/
+
+@media(min-width: 700px) {
+    .btn {
+        padding: 1rem 3rem;
+    }
+}
