@@ -36,7 +36,7 @@
 // ex3: accessors
 let passcode = "secret";
 class Employee {
-    private _fullName: string;
+    private _fullName: string = "";
 
     get fullName(): string {
         return this._fullName;
@@ -52,8 +52,8 @@ class Employee {
         }
     }
 
-    
-    
+
+
 }
 
 
