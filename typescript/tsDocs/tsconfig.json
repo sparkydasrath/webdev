@@ -1,6 +1,7 @@
 {
   "files": [
-    "src/ts/symbols.ts"
+    // "src/ts/validation.ts",
+    "src/ts/zipcodevalidator.ts"
   ],
   "compilerOptions": {
     /* Basic Options */
