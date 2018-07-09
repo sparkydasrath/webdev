@@ -1,0 +1,1 @@
+Reference: https://books.goalkicker.com/TypeScriptBook2/
