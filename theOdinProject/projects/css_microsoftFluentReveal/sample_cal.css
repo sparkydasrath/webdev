@@ -1,0 +1,99 @@
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: sans-serif;
+    justify-content: center;
+    background-color: #111;
+}
+
+p {
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.grid {
+    padding: 40px;
+    width: 420px;
+    height: 360px;
+    box-sizing: border-box;
+}
+
+.cells {
+    position: relative;
+    display: grid;
+    overflow: hidden;
+    box-sizing: border-box;
+    grid-template: auto / repeat( 7, 1fr);
+    height: 100%;
+    grid-gap: 0px;
+    padding: 0px;
+    counter-reset: cell-counter 27;
+    border: 1px solid gray;
+}
+
+.cell {
+    display: flex;
+    position: relative;
+    border: 1px solid #111;
+    color: #444;
+    transition: .3s;
+    transition-property: background-color;
+}
+
+.cell:hover {
+    background-color: #777;
+}
+
+.cell::before {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    content: counter( cell-counter);
+    counter-increment: cell-counter;
+    flex: 1;
+    margin: 2px;
+    background-color: #111;
+    transition: inherit;
+}
+
+.cell:hover::before {
+    background-color: #222;
+}
+
+.cell.start,
+.cell.end {
+    counter-reset: cell-counter 0;
+}
+
+.cell.start,
+.cell.start~.cell {
+    color: #f5f;
+}
+
+.cell.end,
+.cell.end~.cell {
+    color: #ff0 !important;
+}
+
+.border-lighten {
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    margin-top: calc( 160px / -2);
+    margin-left: calc( 160px / -2);
+    background-image: radial-gradient( #fff, transparent 60%);
+    transition: .2s opacity;
+    opacity: 1;
+}
+
+.grid:hover .border-lighten {
+    opacity: .2;
+}
