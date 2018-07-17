@@ -5,13 +5,15 @@ let del = require("del");
 
 let tsProject = gts.createProject("tsconfig.json")
 
-// function clean(cb) {
-//     del(["dist/**/*"]);
-//     cb();
-// }
-
 gulp.task("clean", () => {
     return del(["dist/**/*"]);
+});
+
+gulp.task("compile-mocha-sidebar-tests", () => {
+    return tsProject.src()
+        .pipe(tsProject())
+        .js
+        .pipe(gulp.dest("test/js"));
 });
 
 gulp.task("run-tests", function () {
