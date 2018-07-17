@@ -20,7 +20,7 @@ gulp.task("clean", () => {
 gulp.task("run-tests", function () {
     return gulp.src("test/ts/*.spec.ts")
         .pipe(mocha({
-            reporter: "min",
+            reporter: "list",
             require: ["ts-node/register"]
         }));
 });
