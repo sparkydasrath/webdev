@@ -2,15 +2,16 @@
   "name": "calculator",
   "version": "1.0.0",
   "description": "",
-  "main": "src/js/app.js",
+  "main": "dist/js/app.js",
   "scripts": {
-    "test": "mocha || true"
+    "test": "./node_modules/.bin/mocha --compilers ts:ts-node/register ./test/ts/*.spec.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "chai": "^4.1.2",
+    "del": "^3.0.0",
     "gulp": "^4.0.0",
     "gulp-typescript": "^5.0.0-alpha.3",
     "mocha": "^5.2.0",
@@ -20,6 +21,8 @@
   "devDependencies": {
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.4",
+    "gulp-mocha": "^6.0.0",
+    "ts-node": "^7.0.0",
     "tslint": "^5.11.0"
   }
 }
