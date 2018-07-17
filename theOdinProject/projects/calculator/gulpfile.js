@@ -3,18 +3,19 @@ let gts = require("gulp-typescript");
 let mocha = require("gulp-mocha");
 let del = require("del");
 
-let tsProject = gts.createProject("tsconfig.json")
+let tsProject = gts.createProject("tsconfig.json");
+let testProject = gts.createProject("tsconfig.json");
 
 gulp.task("clean", () => {
     return del(["dist/**/*"]);
 });
 
-gulp.task("compile-mocha-sidebar-tests", () => {
-    return tsProject.src()
-        .pipe(tsProject())
-        .js
-        .pipe(gulp.dest("test/js"));
-});
+// gulp.task("mocha-sidebar-tests", () => {
+//     return testProject.src()
+//         .pipe(testProject())
+//         .js
+//         .pipe(gulp.dest("test/js"));
+// });
 
 gulp.task("run-tests", function () {
     return gulp.src("test/ts/*.spec.ts")
