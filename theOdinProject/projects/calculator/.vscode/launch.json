@@ -25,7 +25,8 @@
                 "--reporter-options", "reportDir=TestResults",
                 "${workspaceFolder}/test/ts" //you can specify paths to specific tests here
             ],
-            "internalConsoleOptions": "openOnSessionStart"
+            "internalConsoleOptions": "openOnSessionStart",
+            "sourceMaps": true
         }
     ]
 }

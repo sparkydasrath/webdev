@@ -2,6 +2,7 @@ let gulp = require("gulp");
 let gts = require("gulp-typescript");
 let mocha = require("gulp-mocha");
 let del = require("del");
+let sm = require("gulp-sourcemaps");
 
 let tsProject = gts.createProject("tsconfig.json");
 let testProject = gts.createProject("tsconfig.json");
@@ -26,13 +27,19 @@ gulp.task("run-tests", function () {
 });
 
 gulp.task("compile", () => {
-    return tsProject.src()
+    return tsProject
+        .src()
         .pipe(tsProject())
         .js
         .pipe(gulp.dest("dist/js"));
 });
 
-gulp.task("default", gulp.series("clean", "run-tests", "compile", (done) => {
+// gulp.task("default", gulp.series("clean", "run-tests", "compile", (done) => {
+//     console.log("GULP: default task running...");
+//     done();
+// }));
+
+gulp.task("default", gulp.series("clean", "compile", (done) => {
     console.log("GULP: default task running...");
     done();
 }));

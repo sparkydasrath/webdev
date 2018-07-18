@@ -23,7 +23,7 @@
                     <button class="btn">BS</button>
                 </div>
                 <div class="btn-border">
-                    <button class="btn">/</button>
+                    <button class="btn" id="btn-div">/</button>
                 </div>
                 <div class="btn-border">
                     <button class="btn">7</button>
@@ -77,8 +77,11 @@
         </div>
 
         </div>
-
-
+        <script>
+            // some sort of hack: https://stackoverflow.com/questions/42497479/uncaught-referenceerror-exports-is-not-defined-in-filed-generated-by-typescript
+            var exports = {};
+        </script>
+        <script src="../../dist/app.js"></script>
     </body>
 
 </html>
