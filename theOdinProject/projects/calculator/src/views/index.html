@@ -23,7 +23,7 @@
                     <button class="btn">BS</button>
                 </div>
                 <div class="btn-border">
-                    <button class="btn" id="btn-div">/</button>
+                    <button class="btn" id="btn-div" data-opType="Divide">/</button>
                 </div>
                 <div class="btn-border">
                     <button class="btn">7</button>
@@ -35,7 +35,7 @@
                     <button class="btn">9</button>
                 </div>
                 <div class="btn-border">
-                    <button class="btn">x</button>
+                    <button class="btn" id="btn-mul" data-opType="Multiply">x</button>
                 </div>
                 <div class="btn-border">
                     <button class="btn">4</button>
@@ -47,7 +47,7 @@
                     <button class="btn">6</button>
                 </div>
                 <div class="btn-border">
-                    <button class="btn">-</button>
+                    <button class="btn" id="btn-sub" data-opType="Subtract">-</button>
                 </div>
                 <div class="btn-border">
                     <button class="btn">1</button>
@@ -59,10 +59,10 @@
                     <button class="btn">3</button>
                 </div>
                 <div class="btn-border">
-                    <button class="btn">+</button>
+                    <button class="btn" id="btn-add" data-opType="Add">+</button>
                 </div>
                 <div class="btn-border">
-                    <button class="btn">p/m</button>
+                    <button class="btn" id="btn-negate" data-opType="Negate">p/m</button>
                 </div>
                 <div class="btn-border">
                     <button class="btn">0</button>
@@ -71,16 +71,13 @@
                     <button class="btn">.</button>
                 </div>
                 <div class="btn-border">
-                    <button class="btn">eq</button>
+                    <button class="btn" id="btn-equal">eq</button>
                 </div>
             </div>
+            <div id="result">Result</div>
         </div>
 
         </div>
-        <script>
-            // some sort of hack: https://stackoverflow.com/questions/42497479/uncaught-referenceerror-exports-is-not-defined-in-filed-generated-by-typescript
-            var exports = {};
-        </script>
         <script src="../js/app.js"></script>
     </body>
 

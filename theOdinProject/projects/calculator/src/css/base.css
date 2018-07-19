@@ -37,3 +37,7 @@ body {
     color: wheat;
     border: 0;
 }
+
+#result {
+    color: white;
+}

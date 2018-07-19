@@ -7,7 +7,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Launch base html",
-            "url": "http://localhost:5500/src/views/index.html",
+            "url": "http://localhost:5500/dist/views/index.html",
             "webRoot": "${workspaceFolder}"
         },
         {
