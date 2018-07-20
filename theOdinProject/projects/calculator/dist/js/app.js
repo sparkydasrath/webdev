@@ -38,15 +38,6 @@ var OperatorType;
     OperatorType["PlusMinus"] = "PlusMinus";
     OperatorType["Equal"] = "Equal";
 })(OperatorType || (OperatorType = {}));
-// enum OperatorType {
-//     None = 0,
-//     Add = 43, // ascii code for add
-//     Subtract = 45, // ascii code for subtract
-//     Multiply = 215, // ascii code for multiply
-//     Divide = 247, // ascii code for divide
-//     PlusMinus = 177, // ascii code for plus_minus 
-//     Equal = 61 // ascii code for equals
-// }
 class Dom {
 }
 class MainView {
@@ -55,10 +46,13 @@ class MainView {
         this.buttonContainerClassName = ".btn-container";
         this.resultDisplayClassName = ".result-display";
         this.summaryDisplayClassName = ".summary-display";
+        this.leftAsString = "";
         this.left = 0;
         this.right = 0;
+        this.rightAsString = "";
         this.total = 0;
         this.opType = OperatorType.None;
+        this.opTypeHtml = "";
         this.dom = new Dom();
         this.ops = new Ops_1.default();
         this.handleBtnContainerClick = (event) => {
@@ -75,6 +69,7 @@ class MainView {
                 this.handleNumberButtonPressed(srcButtonValue);
             else {
                 // get the data that knows what operator button was pressed 
+                this.opTypeHtml = srcButtonValue;
                 this.handleOperatorButtonPressed(srcButton.getAttribute("data-opType"));
             }
             ;
@@ -82,7 +77,7 @@ class MainView {
     }
     cacheDom() {
         this.dom.buttonContainer = document.querySelector(this.buttonContainerClassName);
-        // this.dom.summaryDisplay = <HTMLElement>document.getElementById(this.summaryDisplayClassName);
+        this.dom.summaryDisplay = document.querySelector(this.summaryDisplayClassName);
         this.dom.resultDisplay = document.querySelector(this.resultDisplayClassName);
     }
     bindEvents() {
@@ -97,10 +92,12 @@ class MainView {
         }
         else if (opPressed === OperatorType.Equal) {
             this.computeTotal();
+            this.clearSummaryDisplay();
             return;
         }
         else if (this.opType === OperatorType.None) {
             this.opType = opPressed;
+            this.updateSummaryDisplay();
             console.log(this.opType);
             return;
         }
@@ -112,6 +109,8 @@ class MainView {
         }
     }
     computeTotal() {
+        this.left = Number(this.leftAsString);
+        this.right = Number(this.rightAsString);
         switch (this.opType) {
             case (OperatorType.Add): {
                 this.total = this.ops.add(this.left, this.right);
@@ -138,31 +137,58 @@ class MainView {
                 break;
             }
         }
-        this.displayResult();
+        this.updateSummaryDisplay();
         this.updateLeftAndRightValues();
+        this.displayResult();
     }
     displayResult() {
         if (this.dom.resultDisplay !== null && this.dom.resultDisplay !== undefined) {
-            // this.dom.resultDisplay.te5xtContent = `computing total for left:${this.left} right:${this.right}, op:${this.opType} TOTAL = ${this.total}`;
             this.dom.resultDisplay.textContent = `${this.total}`;
         }
     }
-    // private clearSummaryDisplay(): void {
-    //     if (this.dom.summaryDisplay !== null && this.dom.summaryDisplay !== undefined) { this.dom.summaryDisplay.innerHTML = "" };
-    // }
+    displayLeft() {
+        if (this.dom.resultDisplay !== null && this.dom.resultDisplay !== undefined) {
+            this.dom.resultDisplay.textContent = this.leftAsString;
+        }
+    }
+    displayRight() {
+        if (this.dom.resultDisplay !== null && this.dom.resultDisplay !== undefined) {
+            this.dom.resultDisplay.textContent = this.rightAsString;
+        }
+    }
+    clearSummaryDisplay() {
+        if (this.dom.summaryDisplay !== null && this.dom.summaryDisplay !== undefined) {
+            this.dom.summaryDisplay.innerHTML = "";
+        }
+        ;
+    }
+    updateSummaryDisplay() {
+        if (this.dom.summaryDisplay === null || this.dom.summaryDisplay === undefined) {
+            console.error("Unable to populate summary value");
+            return;
+        }
+        if (this.leftAsString === "") {
+            this.dom.summaryDisplay.innerHTML += this.leftAsString + " " + this.opTypeHtml;
+        }
+        else if (this.rightAsString !== "") {
+            this.dom.summaryDisplay.innerHTML += this.rightAsString + " " + this.opTypeHtml;
+        }
+    }
     updateLeftAndRightValues() {
+        this.leftAsString = this.total.toString();
         this.left = this.total;
+        this.rightAsString = "";
         this.right = 0;
     }
     handleNumberButtonPressed(pressedNumber) {
-        let parsedValue = Number.parseInt(pressedNumber);
-        if (this.left === 0) {
-            this.left = parsedValue;
+        if (this.leftAsString === "" || this.opType === OperatorType.None) {
+            this.leftAsString += pressedNumber;
+            this.displayLeft();
         }
         else {
-            this.right = parsedValue;
+            this.rightAsString += pressedNumber;
+            this.displayRight();
         }
-        console.log(pressedNumber);
     }
     init() {
         this.cacheDom();

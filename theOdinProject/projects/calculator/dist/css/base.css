@@ -5,11 +5,16 @@
 }
 
 :root {
+    /* general */
     --main-bg-color: #252525;
     --general-padding: 5px;
     --font-color: rgba(255, 255, 255, 200);
     --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     --font-size: 1rem;
+    /* display area */
+    --display-padding: 1px;
+    --display-vertical-align: baseline;
+    --display-text-align: right;
 }
 
 body {
@@ -20,20 +25,19 @@ body {
 }
 
 .display-container {
-    padding: 1px;
+    padding: var(--display-padding);
 }
 
 .summary-display {
-    width: auto;
     height: 1em;
-    background-color: gray;
+    text-align: var(--display-text-align);
+    vertical-align: var(--display-vertical-align);
 }
 
 .result-display {
-    width: auto;
     height: 2em;
-    text-align: right;
-    vertical-align: baseline;
+    text-align: var(--display-text-align);
+    vertical-align: var(--display-vertical-align);
     padding: 2px;
 }
 
@@ -67,8 +71,4 @@ body {
 
 .btn:focus {
     outline: 0;
-}
-
-#result {
-    color: white;
 }
