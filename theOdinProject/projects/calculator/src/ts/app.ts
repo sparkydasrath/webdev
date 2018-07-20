@@ -36,6 +36,7 @@ class MainView {
     total: number = 0;
     opType: OperatorType = OperatorType.None;
     opTypeHtml: string = "";
+    useLeftForSummary: boolean = true;
 
     private dom: Dom = new Dom();
     private ops: Ops = new Ops();
@@ -82,15 +83,11 @@ class MainView {
             this.clearSummaryDisplay();
             return;
         }
-        else if (this.opType === OperatorType.None) {
+
+        else {
             this.opType = <OperatorType>opPressed;
             this.updateSummaryDisplay();
-            console.log(this.opType);
-            return;
-        }
-        else {
             this.computeTotal();
-            this.opType = <OperatorType>opPressed;
             console.log(this.opType);
             return;
         }
@@ -128,7 +125,6 @@ class MainView {
                 break;
             }
         }
-        this.updateSummaryDisplay();
         this.updateLeftAndRightValues();
         this.displayResult();
     }
@@ -152,7 +148,8 @@ class MainView {
     }
     private clearSummaryDisplay(): void {
         if (this.dom.summaryDisplay !== null && this.dom.summaryDisplay !== undefined) {
-            this.dom.summaryDisplay.innerHTML = ""
+            this.dom.summaryDisplay.innerHTML = "";
+            this.useLeftForSummary = true;
         };
     }
 
@@ -162,11 +159,12 @@ class MainView {
             return;
         }
 
-        if (this.leftAsString === "") {
-            this.dom.summaryDisplay.innerHTML += this.leftAsString + " " + this.opTypeHtml;
+        if (this.useLeftForSummary) {
+            this.dom.summaryDisplay.innerHTML += this.leftAsString + " " + this.opTypeHtml + " ";
+            this.useLeftForSummary = false;
         }
-        else if (this.rightAsString !== "") {
-            this.dom.summaryDisplay.innerHTML += this.rightAsString + " " + this.opTypeHtml;
+        else {
+            this.dom.summaryDisplay.innerHTML += this.rightAsString + " " + this.opTypeHtml + " ";
         }
     }
 
