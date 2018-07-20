@@ -96,18 +96,31 @@ class MainView {
             this.clearSummaryDisplay();
             return;
         }
+        else if (this.opType === OperatorType.None) {
+            this.opType = opPressed;
+            return;
+        }
         else {
+            // if (!this.canPerformComputation()) {
+            //     return;
+            // }
+            this.computeTotal();
             this.opType = opPressed;
             this.updateSummaryDisplay();
-            this.computeTotal();
             console.log(this.opType);
             return;
         }
+    }
+    canPerformComputation() {
+        return this.right !== 0;
     }
     computeTotal() {
         this.left = Number(this.leftAsString);
         this.right = Number(this.rightAsString);
         switch (this.opType) {
+            case (OperatorType.None): {
+                break;
+            }
             case (OperatorType.Add): {
                 this.total = this.ops.add(this.left, this.right);
                 break;

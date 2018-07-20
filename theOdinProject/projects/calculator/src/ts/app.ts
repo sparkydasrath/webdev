@@ -84,10 +84,16 @@ class MainView {
             return;
         }
 
+        else if (this.opType === OperatorType.None) {
+            this.opType = <OperatorType>opPressed;
+            return;
+        }
+
         else {
+
+            this.computeTotal();
             this.opType = <OperatorType>opPressed;
             this.updateSummaryDisplay();
-            this.computeTotal();
             console.log(this.opType);
             return;
         }
@@ -99,6 +105,9 @@ class MainView {
         this.right = Number(this.rightAsString);
 
         switch (this.opType) {
+            case (OperatorType.None): {
+                break;
+            }
             case (OperatorType.Add): {
                 this.total = this.ops.add(this.left, this.right);
                 break;
