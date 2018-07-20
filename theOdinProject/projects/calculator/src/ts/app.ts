@@ -6,9 +6,20 @@ enum OperatorType {
     Subtract = "Subtract",
     Multiply = "Multiply",
     Divide = "Divide",
-    Negate = "Negate",
+    PlusMinus = "PlusMinus",
     Equal = "Equal"
 }
+
+// enum OperatorType {
+//     None = 0,
+//     Add = 43, // ascii code for add
+//     Subtract = 45, // ascii code for subtract
+//     Multiply = 215, // ascii code for multiply
+//     Divide = 247, // ascii code for divide
+//     PlusMinus = 177, // ascii code for plus_minus 
+//     Equal = 61 // ascii code for equals
+// }
+
 
 class Dom {
     buttonContainer: HTMLElement | null | undefined;
@@ -18,20 +29,16 @@ class Dom {
     divideButton: HTMLButtonElement | null | undefined;
     negateButton: HTMLButtonElement | null | undefined;
     equalButton: HTMLButtonElement | null | undefined;
-    result: HTMLElement | null | undefined;
+    resultDisplay: HTMLElement | null | undefined;
+    summaryDisplay: HTMLElement | null | undefined;
 }
 
 class MainView {
 
     clickEvent: string = "click";
-    buttonContainer: string = ".btn-container";
-    addButton: string = "btn-add";
-    subtractButton: string = "btn-sub";
-    multiplyButton: string = "btn-mul";
-    divideButton: string = "btn-div";
-    negateButton: string = "btn-negate";
-    equalButton: string = "btn-equal";
-    resultToPrint: string = "result";
+    buttonContainerClassName: string = ".btn-container";
+    resultDisplayClassName: string = ".result-display";
+    summaryDisplayClassName: string = ".summary-display";
 
     left: number = 0;
     right: number = 0;
@@ -42,8 +49,9 @@ class MainView {
     private ops: Ops = new Ops();
 
     private cacheDom(): void {
-        this.dom.buttonContainer = <HTMLElement>document.querySelector(this.buttonContainer);
-        this.dom.result = <HTMLElement>document.getElementById(this.resultToPrint);
+        this.dom.buttonContainer = <HTMLElement>document.querySelector(this.buttonContainerClassName);
+        // this.dom.summaryDisplay = <HTMLElement>document.getElementById(this.summaryDisplayClassName);
+        this.dom.resultDisplay = <HTMLElement>document.querySelector(this.resultDisplayClassName);
     }
 
     public bindEvents() {
@@ -63,7 +71,6 @@ class MainView {
         }
 
         let srcButtonValue = srcButton.innerHTML;
-
         if (srcButtonValue >= "0" && srcButtonValue <= "9")
             this.handleNumberButtonPressed(srcButtonValue);
         else {
@@ -73,18 +80,24 @@ class MainView {
     }
 
     private handleOperatorButtonPressed(opPressed: string | null): void {
-
         if (opPressed === null) {
             console.error("Operation selected is null");
             return;
         }
-
-        else if (this.opType === "") {
+        else if (opPressed === OperatorType.Equal) {
+            this.computeTotal();
+            return;
+        }
+        else if (this.opType === OperatorType.None) {
             this.opType = <OperatorType>opPressed;
+            console.log(this.opType);
+            return;
         }
         else {
             this.computeTotal();
             this.opType = <OperatorType>opPressed;
+            console.log(this.opType);
+            return;
         }
     }
 
@@ -107,16 +120,32 @@ class MainView {
                 this.total = this.ops.divide(this.left, this.right);
                 break;
             }
+            case (OperatorType.PlusMinus): {
+                //  need to display negative number
+                break;
+            }
+
             default: {
                 console.log(`Operator ${this.opType} is not defined`);
+                break;
             }
         }
 
+        this.displayResult();
         this.updateLeftAndRightValues();
-
-        if (this.dom.result !== null && this.dom.result !== undefined)
-            this.dom.result.textContent = `computing total for left:${this.left} right:${this.right}, op:${this.opType} TOTAL = ${this.total}`;
     }
+
+    private displayResult(): void {
+        if (this.dom.resultDisplay !== null && this.dom.resultDisplay !== undefined) {
+            // this.dom.resultDisplay.te5xtContent = `computing total for left:${this.left} right:${this.right}, op:${this.opType} TOTAL = ${this.total}`;
+            this.dom.resultDisplay.textContent = `${this.total}`;
+        }
+    }
+
+
+    // private clearSummaryDisplay(): void {
+    //     if (this.dom.summaryDisplay !== null && this.dom.summaryDisplay !== undefined) { this.dom.summaryDisplay.innerHTML = "" };
+    // }
 
     private updateLeftAndRightValues() {
         this.left = this.total;
@@ -143,6 +172,5 @@ class MainView {
 
 (function () {
     let main = new MainView();
-    console.log(main);
     main.init()
 }());

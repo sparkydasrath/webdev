@@ -3,5 +3,5 @@ export interface IOps {
     subtract(x: number, y: number): number;
     multiply(x: number, y: number): number;
     divide(x: number, y: number): number;
-    negate(x: number): number;
+    plusMinus(x: number): number;
 }

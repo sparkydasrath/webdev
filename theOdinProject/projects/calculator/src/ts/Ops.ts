@@ -14,7 +14,7 @@ class Ops implements IOps {
         if (y === 0) return 0;
         return x / y;
     }
-    negate(x: number): number {
+    plusMinus(x: number): number {
         return (-1) * x;
     }
 }
