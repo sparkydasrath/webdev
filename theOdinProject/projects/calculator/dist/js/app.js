@@ -52,6 +52,7 @@ var OperatorType;
     OperatorType["Equal"] = "Equal";
     OperatorType["ClearEntry"] = "ClearEntry";
     OperatorType["ClearAll"] = "ClearAll";
+    OperatorType["Backspace"] = "Backspace";
 })(OperatorType || (OperatorType = {}));
 class Dom {
 }
@@ -163,7 +164,6 @@ class MainView {
                 break;
             }
             case (OperatorType.PlusMinus): {
-                //  need to display negative number
                 break;
             }
             default: {
@@ -171,8 +171,6 @@ class MainView {
                 break;
             }
         }
-        // this.updateLeftAndRightValues();
-        // this.displayResult();
     }
     displayResult() {
         if (this.dom.resultDisplay !== null && this.dom.resultDisplay !== undefined) {
@@ -267,6 +265,11 @@ class MainView {
         }
         if (clearData === OperatorType.ClearEntry) {
             this.clearResultDisplay();
+            return;
+        }
+        if (clearData === OperatorType.Backspace) {
+            this.performBackspaceOnCurrentEntry();
+            return;
         }
     }
     clearSummaryAndResultDisplay() {
@@ -296,9 +299,44 @@ class MainView {
         this.rightAsString = "";
         this.right = 0;
     }
+    performBackspaceOnCurrentEntry() {
+        if (this.dom.resultDisplay === null ||
+            this.dom.resultDisplay === undefined) {
+            console.error("performBackspaceOnCurrentEntry(): resultDisplay is null or undefined (bleh)");
+            return;
+        }
+        if (this.dom.resultDisplay.innerHTML.length === 1) {
+            this.dom.resultDisplay.innerHTML = "0";
+            if (this.useLeftForSummary) {
+                this.leftAsString = "0";
+            }
+            else {
+                this.rightAsString = "0";
+            }
+            return;
+        }
+        let currentResult = this.dom.resultDisplay.innerHTML;
+        let backspacedResult = StringUtility_1.StringUtility.replaceAt(currentResult, "", currentResult.length - 1).trim();
+        if (this.useLeftForSummary) {
+            this.leftAsString = backspacedResult;
+        }
+        else {
+            this.rightAsString = backspacedResult;
+        }
+        this.dom.resultDisplay.innerHTML = backspacedResult;
+    }
+    initResultToZero() {
+        if (this.dom.resultDisplay === null ||
+            this.dom.resultDisplay === undefined) {
+            console.error("initResultToZero(): resultDisplay is null or undefined (bleh)");
+            return;
+        }
+        this.dom.resultDisplay.innerHTML = "0";
+    }
     init() {
         this.cacheDom();
         this.bindEvents();
+        this.initResultToZero();
     }
 }
 (function () {

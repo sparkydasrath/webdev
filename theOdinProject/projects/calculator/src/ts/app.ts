@@ -10,7 +10,8 @@ enum OperatorType {
     PlusMinus = "PlusMinus",
     Equal = "Equal",
     ClearEntry = "ClearEntry",
-    ClearAll = "ClearAll"
+    ClearAll = "ClearAll",
+    Backspace = "Backspace"
 }
 
 class Dom {
@@ -102,7 +103,6 @@ class MainView {
         }
 
         else {
-
             this.computeTotal();
             this.opType = <OperatorType>opPressed;
             this.updateViewPipeline(false, htmlContentOfOp);
@@ -149,7 +149,6 @@ class MainView {
                 break;
             }
             case (OperatorType.PlusMinus): {
-                //  need to display negative number
                 break;
             }
 
@@ -158,8 +157,6 @@ class MainView {
                 break;
             }
         }
-        // this.updateLeftAndRightValues();
-        // this.displayResult();
     }
 
     private displayResult(): void {
@@ -273,6 +270,11 @@ class MainView {
         }
         if (clearData === <OperatorType>OperatorType.ClearEntry) {
             this.clearResultDisplay();
+            return;
+        }
+        if (clearData === <OperatorType>OperatorType.Backspace) {
+            this.performBackspaceOnCurrentEntry();
+            return;
         }
     }
 
@@ -307,9 +309,48 @@ class MainView {
         this.right = 0;
     }
 
+    private performBackspaceOnCurrentEntry(): void {
+        if (this.dom.resultDisplay === null ||
+            this.dom.resultDisplay === undefined) {
+            console.error("performBackspaceOnCurrentEntry(): resultDisplay is null or undefined (bleh)")
+            return;
+        }
+
+        if (this.dom.resultDisplay.innerHTML.length === 1) {
+            this.dom.resultDisplay.innerHTML = "0";
+            if (this.useLeftForSummary) {
+                this.leftAsString = "0";
+            }
+            else {
+                this.rightAsString = "0";
+            }
+            return;
+        }
+
+        let currentResult = this.dom.resultDisplay.innerHTML;
+        let backspacedResult = StringUtility.replaceAt(currentResult, "", currentResult.length - 1).trim();
+        if (this.useLeftForSummary) {
+            this.leftAsString = backspacedResult;
+        }
+        else {
+            this.rightAsString = backspacedResult;
+        }
+        this.dom.resultDisplay.innerHTML = backspacedResult;
+    }
+
+    private initResultToZero(): void {
+        if (this.dom.resultDisplay === null ||
+            this.dom.resultDisplay === undefined) {
+            console.error("initResultToZero(): resultDisplay is null or undefined (bleh)")
+            return;
+        }
+        this.dom.resultDisplay.innerHTML = "0";
+    }
+
     public init() {
         this.cacheDom();
         this.bindEvents();
+        this.initResultToZero();
     }
 }
 
