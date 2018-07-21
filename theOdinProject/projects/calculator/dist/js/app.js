@@ -50,6 +50,8 @@ var OperatorType;
     OperatorType["Divide"] = "Divide";
     OperatorType["PlusMinus"] = "PlusMinus";
     OperatorType["Equal"] = "Equal";
+    OperatorType["ClearEntry"] = "ClearEntry";
+    OperatorType["ClearAll"] = "ClearAll";
 })(OperatorType || (OperatorType = {}));
 class Dom {
 }
@@ -80,8 +82,12 @@ class MainView {
                 return;
             }
             let srcButtonValue = srcButton.innerHTML;
+            let clearData = srcButton.getAttribute("data-opClear");
             if (srcButtonValue >= "0" && srcButtonValue <= "9")
                 this.handleNumberButtonPressed(srcButtonValue);
+            else if (clearData !== null) {
+                this.handleClear(clearData);
+            }
             else {
                 // get the data that knows what operator button was pressed 
                 this.opTypeHtml = srcButtonValue;
@@ -184,11 +190,15 @@ class MainView {
         }
     }
     clearSummaryDisplay() {
-        if (this.dom.summaryDisplay !== null && this.dom.summaryDisplay !== undefined) {
+        if (this.dom.summaryDisplay === null || this.dom.summaryDisplay === undefined) {
+            console.log("checkSummaryDisplayForNullOrUndefined(): Summary display is null or undefined");
+            return;
+        }
+        else {
             this.dom.summaryDisplay.innerHTML = "";
             this.useLeftForSummary = true;
+            this.opPressedCount = 0;
         }
-        ;
     }
     updateSummaryDisplay(opPressedHtml) {
         if (this.dom.summaryDisplay === null || this.dom.summaryDisplay === undefined) {
@@ -204,7 +214,6 @@ class MainView {
             this.useLeftForSummary = false;
         }
         else {
-            // this.dom.summaryDisplay.innerHTML += this.rightAsString + " " + this.opTypeHtml + " ";
             this.fullRightSummaryDisplayUpdate();
         }
     }
@@ -250,6 +259,42 @@ class MainView {
             this.rightAsString += pressedNumber;
             this.displayRight();
         }
+    }
+    handleClear(clearData) {
+        if (clearData === OperatorType.ClearAll) {
+            this.clearSummaryAndResultDisplay();
+            return;
+        }
+        if (clearData === OperatorType.ClearEntry) {
+            this.clearResultDisplay();
+        }
+    }
+    clearSummaryAndResultDisplay() {
+        if (this.dom.summaryDisplay === null ||
+            this.dom.summaryDisplay === undefined ||
+            this.dom.resultDisplay === null ||
+            this.dom.resultDisplay === undefined) {
+            console.error("clearSummaryAndResultDisplay(): summaryDisplay or resultDisplay is null or undefined (bleh)");
+            return;
+        }
+        this.dom.summaryDisplay.innerHTML = "";
+        this.dom.resultDisplay.innerHTML = "0";
+        this.leftAsString = "";
+        this.left = 0;
+        this.rightAsString = "";
+        this.right = 0;
+        this.useLeftForSummary = true;
+        this.opPressedCount = 0;
+    }
+    clearResultDisplay() {
+        if (this.dom.resultDisplay === null ||
+            this.dom.resultDisplay === undefined) {
+            console.error("clearResultDisplay(): resultDisplay is null or undefined (bleh)");
+            return;
+        }
+        this.dom.resultDisplay.innerHTML = "0";
+        this.rightAsString = "";
+        this.right = 0;
     }
     init() {
         this.cacheDom();

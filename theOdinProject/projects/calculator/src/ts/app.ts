@@ -8,7 +8,9 @@ enum OperatorType {
     Multiply = "Multiply",
     Divide = "Divide",
     PlusMinus = "PlusMinus",
-    Equal = "Equal"
+    Equal = "Equal",
+    ClearEntry = "ClearEntry",
+    ClearAll = "ClearAll"
 }
 
 class Dom {
@@ -66,8 +68,12 @@ class MainView {
         }
 
         let srcButtonValue = srcButton.innerHTML;
+        let clearData: string | null = srcButton.getAttribute("data-opClear");
         if (srcButtonValue >= "0" && srcButtonValue <= "9")
             this.handleNumberButtonPressed(srcButtonValue);
+        else if (clearData !== null) {
+            this.handleClear(clearData);
+        }
         else {
             // get the data that knows what operator button was pressed 
             this.opTypeHtml = srcButtonValue;
@@ -173,11 +179,19 @@ class MainView {
             this.dom.resultDisplay.textContent = this.rightAsString;
         }
     }
+
     private clearSummaryDisplay(): void {
-        if (this.dom.summaryDisplay !== null && this.dom.summaryDisplay !== undefined) {
+
+        if (this.dom.summaryDisplay === null || this.dom.summaryDisplay === undefined) {
+            console.log("checkSummaryDisplayForNullOrUndefined(): Summary display is null or undefined");
+            return;
+        }
+
+        else {
             this.dom.summaryDisplay.innerHTML = "";
             this.useLeftForSummary = true;
-        };
+            this.opPressedCount = 0;
+        }
     }
 
     private updateSummaryDisplay(opPressedHtml: string): void {
@@ -196,7 +210,6 @@ class MainView {
             this.useLeftForSummary = false;
         }
         else {
-            // this.dom.summaryDisplay.innerHTML += this.rightAsString + " " + this.opTypeHtml + " ";
             this.fullRightSummaryDisplayUpdate();
         }
     }
@@ -251,6 +264,47 @@ class MainView {
             this.rightAsString += pressedNumber;
             this.displayRight();
         }
+    }
+
+    public handleClear(clearData: string | null): void {
+        if (clearData === <OperatorType>OperatorType.ClearAll) {
+            this.clearSummaryAndResultDisplay();
+            return;
+        }
+        if (clearData === <OperatorType>OperatorType.ClearEntry) {
+            this.clearResultDisplay();
+        }
+    }
+
+    private clearSummaryAndResultDisplay(): void {
+
+        if (this.dom.summaryDisplay === null ||
+            this.dom.summaryDisplay === undefined ||
+            this.dom.resultDisplay === null ||
+            this.dom.resultDisplay === undefined) {
+            console.error("clearSummaryAndResultDisplay(): summaryDisplay or resultDisplay is null or undefined (bleh)")
+            return;
+        }
+        this.dom.summaryDisplay.innerHTML = ""
+        this.dom.resultDisplay.innerHTML = "0"
+
+        this.leftAsString = "";
+        this.left = 0;
+        this.rightAsString = "";
+        this.right = 0;
+        this.useLeftForSummary = true;
+        this.opPressedCount = 0;
+    }
+
+    private clearResultDisplay(): void {
+        if (this.dom.resultDisplay === null ||
+            this.dom.resultDisplay === undefined) {
+            console.error("clearResultDisplay(): resultDisplay is null or undefined (bleh)")
+            return;
+        }
+        this.dom.resultDisplay.innerHTML = "0"
+        this.rightAsString = "";
+        this.right = 0;
     }
 
     public init() {
