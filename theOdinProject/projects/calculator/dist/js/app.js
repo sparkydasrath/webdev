@@ -84,7 +84,7 @@ class MainView {
             }
             let srcButtonValue = srcButton.innerHTML;
             let clearData = srcButton.getAttribute("data-opClear");
-            if (srcButtonValue >= "0" && srcButtonValue <= "9")
+            if ((srcButtonValue >= "0" && srcButtonValue <= "9") || srcButtonValue === ".")
                 this.handleNumberButtonPressed(srcButtonValue);
             else if (clearData !== null) {
                 this.handleClear(clearData);
