@@ -58,7 +58,7 @@ describe("Ops Tests\t", () => {
     });
 
     it("Negate should return negative of parameter passed in", () => {
-        let negateResult = new Ops().negate(1);
+        let negateResult = new Ops().plusMinus(1);
         assert.equal(negateResult, -1);
     });
 

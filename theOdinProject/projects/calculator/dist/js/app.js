@@ -23,11 +23,24 @@ class Ops {
 exports.default = Ops;
 },{}],2:[function(require,module,exports){
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class StringUtility {
+    static replaceAt(oringalString, replacementString, position) {
+        let origAsArray = oringalString.split("");
+        origAsArray[position] = replacementString;
+        let finalString = origAsArray.join("");
+        return finalString;
+    }
+}
+exports.StringUtility = StringUtility;
+},{}],3:[function(require,module,exports){
+"use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Ops_1 = __importDefault(require("./Ops"));
+const StringUtility_1 = require("./StringUtility");
 var OperatorType;
 (function (OperatorType) {
     OperatorType["None"] = "";
@@ -54,6 +67,7 @@ class MainView {
         this.opType = OperatorType.None;
         this.opTypeHtml = "";
         this.useLeftForSummary = true;
+        this.opPressedCount = 0;
         this.dom = new Dom();
         this.ops = new Ops_1.default();
         this.handleBtnContainerClick = (event) => {
@@ -71,7 +85,7 @@ class MainView {
             else {
                 // get the data that knows what operator button was pressed 
                 this.opTypeHtml = srcButtonValue;
-                this.handleOperatorButtonPressed(srcButton.getAttribute("data-opType"));
+                this.handleOperatorButtonPressed(srcButton.getAttribute("data-opType"), srcButtonValue);
             }
             ;
         };
@@ -86,33 +100,38 @@ class MainView {
             this.dom.buttonContainer.addEventListener(this.clickEvent, this.handleBtnContainerClick);
         }
     }
-    handleOperatorButtonPressed(opPressed) {
+    handleOperatorButtonPressed(opPressed, htmlContentOfOp) {
+        this.opPressedCount++;
         if (opPressed === null) {
             console.error("Operation selected is null");
             return;
         }
         else if (opPressed === OperatorType.Equal) {
             this.computeTotal();
-            this.clearSummaryDisplay();
+            this.updateViewPipeline(true, htmlContentOfOp);
             return;
         }
         else if (this.opType === OperatorType.None) {
             this.opType = opPressed;
+            this.updateSummaryDisplay(htmlContentOfOp);
             return;
         }
         else {
-            // if (!this.canPerformComputation()) {
-            //     return;
-            // }
             this.computeTotal();
             this.opType = opPressed;
-            this.updateSummaryDisplay();
-            console.log(this.opType);
+            this.updateViewPipeline(false, htmlContentOfOp);
             return;
         }
     }
-    canPerformComputation() {
-        return this.right !== 0;
+    updateViewPipeline(canClearSummaryDisplay, htmlContentOfOp) {
+        if (canClearSummaryDisplay) {
+            this.clearSummaryDisplay();
+        }
+        else {
+            this.updateSummaryDisplay(htmlContentOfOp);
+        }
+        this.updateLeftAndRightValues();
+        this.displayResult();
     }
     computeTotal() {
         this.left = Number(this.leftAsString);
@@ -146,8 +165,8 @@ class MainView {
                 break;
             }
         }
-        this.updateLeftAndRightValues();
-        this.displayResult();
+        // this.updateLeftAndRightValues();
+        // this.displayResult();
     }
     displayResult() {
         if (this.dom.resultDisplay !== null && this.dom.resultDisplay !== undefined) {
@@ -171,18 +190,49 @@ class MainView {
         }
         ;
     }
-    updateSummaryDisplay() {
+    updateSummaryDisplay(opPressedHtml) {
         if (this.dom.summaryDisplay === null || this.dom.summaryDisplay === undefined) {
             console.error("Unable to populate summary value");
             return;
         }
+        if (this.opPressedCount > 1) {
+            this.partialSummaryDisplayUpdate(opPressedHtml);
+            return;
+        }
         if (this.useLeftForSummary) {
-            this.dom.summaryDisplay.innerHTML += this.leftAsString + " " + this.opTypeHtml + " ";
+            this.fullLeftSummaryDisplayUpdate();
             this.useLeftForSummary = false;
         }
         else {
-            this.dom.summaryDisplay.innerHTML += this.rightAsString + " " + this.opTypeHtml + " ";
+            // this.dom.summaryDisplay.innerHTML += this.rightAsString + " " + this.opTypeHtml + " ";
+            this.fullRightSummaryDisplayUpdate();
         }
+    }
+    fullLeftSummaryDisplayUpdate() {
+        if (this.dom.summaryDisplay === null || this.dom.summaryDisplay === undefined) {
+            console.error("fullSummaryDisplayUpdate(): Unable to do a full summary display update");
+            return;
+        }
+        this.dom.summaryDisplay.innerHTML += this.leftAsString + " " + this.opTypeHtml + " ";
+    }
+    fullRightSummaryDisplayUpdate() {
+        if (this.dom.summaryDisplay === null || this.dom.summaryDisplay === undefined) {
+            console.error("fullSummaryDisplayUpdate(): Unable to do a full summary display update");
+            return;
+        }
+        this.dom.summaryDisplay.innerHTML += this.rightAsString + " " + this.opTypeHtml + " ";
+    }
+    partialSummaryDisplayUpdate(opPressedHtml) {
+        if (this.dom.summaryDisplay === null || this.dom.summaryDisplay === undefined) {
+            console.error("partialSummaryDisplayUpdate(): Unable to do a partial summary display update");
+            return;
+        }
+        let replaced = this.replaceLastDisplayedOperatorWithCurrentOne(this.dom.summaryDisplay.innerHTML, opPressedHtml);
+        this.dom.summaryDisplay.innerHTML = replaced;
+    }
+    replaceLastDisplayedOperatorWithCurrentOne(valueToModify, replacementValue) {
+        let currentDisplay = StringUtility_1.StringUtility.replaceAt(valueToModify, replacementValue, valueToModify.length - 2);
+        return currentDisplay;
     }
     updateLeftAndRightValues() {
         this.leftAsString = this.total.toString();
@@ -191,6 +241,7 @@ class MainView {
         this.right = 0;
     }
     handleNumberButtonPressed(pressedNumber) {
+        this.opPressedCount = 0;
         if (this.leftAsString === "" || this.opType === OperatorType.None) {
             this.leftAsString += pressedNumber;
             this.displayLeft();
@@ -209,6 +260,6 @@ class MainView {
     let main = new MainView();
     main.init();
 }());
-},{"./Ops":1}]},{},[2])
+},{"./Ops":1,"./StringUtility":2}]},{},[3])
 
 //# sourceMappingURL=app.js.map

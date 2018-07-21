@@ -1,4 +1,5 @@
 import Ops from "./Ops";
+import { StringUtility } from "./StringUtility";
 
 enum OperatorType {
     None = "",
@@ -37,6 +38,7 @@ class MainView {
     opType: OperatorType = OperatorType.None;
     opTypeHtml: string = "";
     useLeftForSummary: boolean = true;
+    opPressedCount: number = 0;
 
     private dom: Dom = new Dom();
     private ops: Ops = new Ops();
@@ -69,23 +71,27 @@ class MainView {
         else {
             // get the data that knows what operator button was pressed 
             this.opTypeHtml = srcButtonValue;
-            this.handleOperatorButtonPressed(srcButton.getAttribute("data-opType"));
+            this.handleOperatorButtonPressed(srcButton.getAttribute("data-opType"), srcButtonValue);
         };
     }
 
-    private handleOperatorButtonPressed(opPressed: string | null): void {
+    private handleOperatorButtonPressed(opPressed: string | null, htmlContentOfOp: string): void {
+
+        this.opPressedCount++;
+
         if (opPressed === null) {
             console.error("Operation selected is null");
             return;
         }
         else if (opPressed === OperatorType.Equal) {
             this.computeTotal();
-            this.clearSummaryDisplay();
+            this.updateViewPipeline(true, htmlContentOfOp);
             return;
         }
 
         else if (this.opType === OperatorType.None) {
             this.opType = <OperatorType>opPressed;
+            this.updateSummaryDisplay(htmlContentOfOp);
             return;
         }
 
@@ -93,11 +99,23 @@ class MainView {
 
             this.computeTotal();
             this.opType = <OperatorType>opPressed;
-            this.updateSummaryDisplay();
-            console.log(this.opType);
+            this.updateViewPipeline(false, htmlContentOfOp);
             return;
         }
     }
+
+    private updateViewPipeline(canClearSummaryDisplay: boolean, htmlContentOfOp: string) {
+        if (canClearSummaryDisplay) {
+            this.clearSummaryDisplay();
+        }
+        else {
+            this.updateSummaryDisplay(htmlContentOfOp);
+        }
+
+        this.updateLeftAndRightValues();
+        this.displayResult();
+    }
+
 
     private computeTotal(): void {
 
@@ -134,8 +152,8 @@ class MainView {
                 break;
             }
         }
-        this.updateLeftAndRightValues();
-        this.displayResult();
+        // this.updateLeftAndRightValues();
+        // this.displayResult();
     }
 
     private displayResult(): void {
@@ -162,19 +180,56 @@ class MainView {
         };
     }
 
-    private updateSummaryDisplay(): void {
+    private updateSummaryDisplay(opPressedHtml: string): void {
         if (this.dom.summaryDisplay === null || this.dom.summaryDisplay === undefined) {
             console.error("Unable to populate summary value");
             return;
         }
 
+        if (this.opPressedCount > 1) {
+            this.partialSummaryDisplayUpdate(opPressedHtml);
+            return;
+        }
+
         if (this.useLeftForSummary) {
-            this.dom.summaryDisplay.innerHTML += this.leftAsString + " " + this.opTypeHtml + " ";
+            this.fullLeftSummaryDisplayUpdate();
             this.useLeftForSummary = false;
         }
         else {
-            this.dom.summaryDisplay.innerHTML += this.rightAsString + " " + this.opTypeHtml + " ";
+            // this.dom.summaryDisplay.innerHTML += this.rightAsString + " " + this.opTypeHtml + " ";
+            this.fullRightSummaryDisplayUpdate();
         }
+    }
+
+    private fullLeftSummaryDisplayUpdate(): void {
+        if (this.dom.summaryDisplay === null || this.dom.summaryDisplay === undefined) {
+            console.error("fullSummaryDisplayUpdate(): Unable to do a full summary display update");
+            return;
+        }
+        this.dom.summaryDisplay.innerHTML += this.leftAsString + " " + this.opTypeHtml + " ";
+    }
+
+    private fullRightSummaryDisplayUpdate(): void {
+        if (this.dom.summaryDisplay === null || this.dom.summaryDisplay === undefined) {
+            console.error("fullSummaryDisplayUpdate(): Unable to do a full summary display update");
+            return;
+        }
+        this.dom.summaryDisplay.innerHTML += this.rightAsString + " " + this.opTypeHtml + " ";
+    }
+
+    private partialSummaryDisplayUpdate(opPressedHtml: string): void {
+        if (this.dom.summaryDisplay === null || this.dom.summaryDisplay === undefined) {
+            console.error("partialSummaryDisplayUpdate(): Unable to do a partial summary display update");
+            return;
+        }
+        let replaced = this.replaceLastDisplayedOperatorWithCurrentOne(this.dom.summaryDisplay.innerHTML, opPressedHtml);
+        this.dom.summaryDisplay.innerHTML = replaced;
+    }
+
+    private replaceLastDisplayedOperatorWithCurrentOne(valueToModify: string, replacementValue: string): string {
+
+        let currentDisplay = StringUtility.replaceAt(valueToModify, replacementValue, valueToModify.length - 2);
+        return currentDisplay;
     }
 
     private updateLeftAndRightValues() {
@@ -185,6 +240,8 @@ class MainView {
     }
 
     private handleNumberButtonPressed(pressedNumber: string): void {
+
+        this.opPressedCount = 0;
 
         if (this.leftAsString === "" || this.opType === OperatorType.None) {
             this.leftAsString += pressedNumber;
