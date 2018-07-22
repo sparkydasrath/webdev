@@ -2,12 +2,15 @@ import Ops from "./Ops";
 import Dom from "./Dom";
 import { StringUtility } from "./StringUtility";
 import { OperatorType } from "./OperatorType";
+import Effect from "./Effects";
 
 const MaxDisplayLength: number = 13;
 
 class MainView {
 
     clickEvent: string = "click";
+    mouseMoveEvent: string = "mousemove";
+    revealEffectContainerClassName: string = ".outer-wrapper";
     buttonContainerClassName: string = ".btn-container";
     resultDisplayClassName: string = ".result-display";
     summaryDisplayClassName: string = ".summary-display";
@@ -26,15 +29,30 @@ class MainView {
     private ops: Ops = new Ops();
 
     private cacheDom(): void {
+        this.dom.revealEffectContainer = <HTMLElement>document.querySelector(this.revealEffectContainerClassName);
         this.dom.buttonContainer = <HTMLElement>document.querySelector(this.buttonContainerClassName);
+        this.dom.buttonContainers = <NodeList>document.querySelectorAll(this.buttonContainerClassName);
         this.dom.summaryDisplay = <HTMLElement>document.querySelector(this.summaryDisplayClassName);
         this.dom.resultDisplay = <HTMLElement>document.querySelector(this.resultDisplayClassName);
     }
 
     public bindEvents() {
+        if (this.dom.revealEffectContainer !== null && this.dom.revealEffectContainer !== undefined) {
+            this.dom.revealEffectContainer.addEventListener(this.mouseMoveEvent, this.handleRevalContainerMouseMove);
+        }
+
         if (this.dom.buttonContainer !== null && this.dom.buttonContainer !== undefined) {
             this.dom.buttonContainer.addEventListener(this.clickEvent, this.handleBtnContainerClick);
         }
+    }
+
+    public handleRevalContainerMouseMove = (event: Event): void => {
+        if (this.dom.buttonContainer === null ||
+            this.dom.buttonContainer === undefined) {
+            return;
+        }
+        let bcr = this.dom.buttonContainer.getBoundingClientRect();
+        Effect.reveal(this.dom.buttonContainer, Effect.updateGradient((<MouseEvent>event).clientX - bcr.left, (<MouseEvent>event).clientY - bcr.top));
     }
 
     public handleBtnContainerClick = (event: Event): void => {

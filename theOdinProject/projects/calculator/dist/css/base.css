@@ -18,7 +18,7 @@
     /*button specific*/
     --button-operator-color: #131313;
     --button-number-color: #060606;
-    --button-hover-color: rgba(207, 207, 207, 0.8);
+    --button-hover-color: rgba(207, 207, 207, 0.9);
 }
 
 body {
@@ -99,4 +99,6 @@ body .result-display {
 
 .btn:hover {
     background-color: var(--button-hover-color);
+    opacity: 0.7;
+    color: black;
 }

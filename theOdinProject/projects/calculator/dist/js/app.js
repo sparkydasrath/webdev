@@ -7,6 +7,20 @@ exports.default = Dom;
 },{}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+class Effect {
+    static reveal(element, gradientBackground) {
+        element.style.backgroundImage = gradientBackground;
+    }
+    static updateGradient(leftPositionX, topPositionY) {
+        // let gradient = `radial-gradient(circle 50px at ${leftPositionX}px ${topPositionY}px, rgba(255,255,255,0.3), rgba(255,255,255,0)), radial-gradient(circle ${70}px at ${leftPositionX}px ${topPositionY}px, rgba(255,255,255,0), rgba(255,255,255,0.3), rgba(255,255,255,0), rgba(255,255,255,0))`;
+        let gradient = `radial-gradient(circle 50px at ${leftPositionX}px ${topPositionY}px, rgba(255,255,255,0.3), rgba(255,255,255,0))`;
+        return gradient;
+    }
+}
+exports.default = Effect;
+},{}],3:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var OperatorType;
 (function (OperatorType) {
     OperatorType["None"] = "";
@@ -20,7 +34,7 @@ var OperatorType;
     OperatorType["ClearAll"] = "ClearAll";
     OperatorType["Backspace"] = "Backspace";
 })(OperatorType = exports.OperatorType || (exports.OperatorType = {}));
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Ops {
@@ -43,7 +57,7 @@ class Ops {
     }
 }
 exports.default = Ops;
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class StringUtility {
@@ -55,7 +69,7 @@ class StringUtility {
     }
 }
 exports.StringUtility = StringUtility;
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -65,10 +79,13 @@ const Ops_1 = __importDefault(require("./Ops"));
 const Dom_1 = __importDefault(require("./Dom"));
 const StringUtility_1 = require("./StringUtility");
 const OperatorType_1 = require("./OperatorType");
+const Effects_1 = __importDefault(require("./Effects"));
 const MaxDisplayLength = 13;
 class MainView {
     constructor() {
         this.clickEvent = "click";
+        this.mouseMoveEvent = "mousemove";
+        this.revealEffectContainerClassName = ".outer-wrapper";
         this.buttonContainerClassName = ".btn-container";
         this.resultDisplayClassName = ".result-display";
         this.summaryDisplayClassName = ".summary-display";
@@ -83,6 +100,28 @@ class MainView {
         this.opPressedCount = 0;
         this.dom = new Dom_1.default();
         this.ops = new Ops_1.default();
+        this.handleRevalContainerMouseMove = (event) => {
+            if (this.dom.buttonContainer === null ||
+                this.dom.buttonContainer === undefined) {
+                return;
+            }
+            let bcr = this.dom.buttonContainer.getBoundingClientRect();
+            console.log(`bcRect:${bcr.left}-${bcr.top}, cx:${event.clientX}, cy:${event.clientY}`);
+            Effects_1.default.reveal(this.dom.buttonContainer, Effects_1.default.updateGradient(event.clientX - bcr.left, event.clientY - bcr.top));
+            // let children = this.dom.buttonContainer.children;
+            // if (children.length <= 0) return;
+            // for (let i = 0; i < children.length; i++) {
+            //     const bc = children[i];
+            //     let clientRect = bc.getBoundingClientRect();
+            //     let top = clientRect.top + document.body.scrollTop;
+            //     let left = clientRect.left + document.body.scrollLeft;
+            //     let x = (<MouseEvent>event).clientX - left;
+            //     let y = (<MouseEvent>event).clientY - top;
+            //     // console.log(`left: ${left}, top: ${top}, x:${x}, y:${y}, cRL:${(<MouseEvent>event).clientX}, cRT:${(<MouseEvent>event).clientY}, cx:${(<MouseEvent>event).clientX}, cy:${(<MouseEvent>event).clientY}`);
+            //     console.log(`${(<MouseEvent>event).clientX + x}, ${(<MouseEvent>event).clientX + y}`);
+            //     Effect.reveal(this.dom.buttonContainer, Effect.updateGradient((<MouseEvent>event).clientX + x, (<MouseEvent>event).clientY) + y);
+            // }
+        };
         this.handleBtnContainerClick = (event) => {
             // had to do the event handler this way in order to pass along the correct 'this'
             //  context to it
@@ -108,11 +147,16 @@ class MainView {
         };
     }
     cacheDom() {
+        this.dom.revealEffectContainer = document.querySelector(this.revealEffectContainerClassName);
         this.dom.buttonContainer = document.querySelector(this.buttonContainerClassName);
+        this.dom.buttonContainers = document.querySelectorAll(this.buttonContainerClassName);
         this.dom.summaryDisplay = document.querySelector(this.summaryDisplayClassName);
         this.dom.resultDisplay = document.querySelector(this.resultDisplayClassName);
     }
     bindEvents() {
+        if (this.dom.revealEffectContainer !== null && this.dom.revealEffectContainer !== undefined) {
+            this.dom.revealEffectContainer.addEventListener(this.mouseMoveEvent, this.handleRevalContainerMouseMove);
+        }
         if (this.dom.buttonContainer !== null && this.dom.buttonContainer !== undefined) {
             this.dom.buttonContainer.addEventListener(this.clickEvent, this.handleBtnContainerClick);
         }
@@ -378,6 +422,6 @@ class MainView {
     let main = new MainView();
     main.init();
 }());
-},{"./Dom":1,"./OperatorType":2,"./Ops":3,"./StringUtility":4}]},{},[5])
+},{"./Dom":1,"./Effects":2,"./OperatorType":3,"./Ops":4,"./StringUtility":5}]},{},[6])
 
 //# sourceMappingURL=app.js.map
