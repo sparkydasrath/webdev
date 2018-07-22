@@ -1,30 +1,7 @@
 import Ops from "./Ops";
+import Dom from "./Dom";
 import { StringUtility } from "./StringUtility";
-
-enum OperatorType {
-    None = "",
-    Add = "Add",
-    Subtract = "Subtract",
-    Multiply = "Multiply",
-    Divide = "Divide",
-    PlusMinus = "PlusMinus",
-    Equal = "Equal",
-    ClearEntry = "ClearEntry",
-    ClearAll = "ClearAll",
-    Backspace = "Backspace"
-}
-
-class Dom {
-    buttonContainer: HTMLElement | null | undefined;
-    addButton: HTMLButtonElement | null | undefined;
-    subtractButton: HTMLButtonElement | null | undefined;
-    multiplyButton: HTMLButtonElement | null | undefined;
-    divideButton: HTMLButtonElement | null | undefined;
-    negateButton: HTMLButtonElement | null | undefined;
-    equalButton: HTMLButtonElement | null | undefined;
-    resultDisplay: HTMLElement | null | undefined;
-    summaryDisplay: HTMLElement | null | undefined;
-}
+import { OperatorType } from "./OperatorType";
 
 class MainView {
 
@@ -149,8 +126,7 @@ class MainView {
     }
 
     private computeTotal(): void {
-
-        ; this.left = Number(this.leftAsString);
+        this.left = Number(this.leftAsString);
         this.right = Number(this.rightAsString);
 
         switch (this.opType) {
@@ -171,9 +147,6 @@ class MainView {
             }
             case (OperatorType.Divide): {
                 this.total = this.ops.divide(this.left, this.right);
-                break;
-            }
-            case (OperatorType.PlusMinus): {
                 break;
             }
 
@@ -262,7 +235,6 @@ class MainView {
     }
 
     private replaceLastDisplayedOperatorWithCurrentOne(valueToModify: string, replacementValue: string): string {
-
         let currentDisplay = StringUtility.replaceAt(valueToModify, replacementValue, valueToModify.length - 2);
         return currentDisplay;
     }
@@ -275,7 +247,6 @@ class MainView {
     }
 
     private handleNumberButtonPressed(pressedNumber: string): void {
-
         this.opPressedCount = 0;
 
         if (this.leftAsString === "" || this.opType === OperatorType.None) {

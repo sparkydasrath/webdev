@@ -1,6 +1,28 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+class Dom {
+}
+exports.default = Dom;
+},{}],2:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var OperatorType;
+(function (OperatorType) {
+    OperatorType["None"] = "";
+    OperatorType["Add"] = "Add";
+    OperatorType["Subtract"] = "Subtract";
+    OperatorType["Multiply"] = "Multiply";
+    OperatorType["Divide"] = "Divide";
+    OperatorType["PlusMinus"] = "PlusMinus";
+    OperatorType["Equal"] = "Equal";
+    OperatorType["ClearEntry"] = "ClearEntry";
+    OperatorType["ClearAll"] = "ClearAll";
+    OperatorType["Backspace"] = "Backspace";
+})(OperatorType = exports.OperatorType || (exports.OperatorType = {}));
+},{}],3:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class Ops {
     add(x, y) {
         return x + y;
@@ -21,7 +43,7 @@ class Ops {
     }
 }
 exports.default = Ops;
-},{}],2:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class StringUtility {
@@ -33,29 +55,16 @@ class StringUtility {
     }
 }
 exports.StringUtility = StringUtility;
-},{}],3:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Ops_1 = __importDefault(require("./Ops"));
+const Dom_1 = __importDefault(require("./Dom"));
 const StringUtility_1 = require("./StringUtility");
-var OperatorType;
-(function (OperatorType) {
-    OperatorType["None"] = "";
-    OperatorType["Add"] = "Add";
-    OperatorType["Subtract"] = "Subtract";
-    OperatorType["Multiply"] = "Multiply";
-    OperatorType["Divide"] = "Divide";
-    OperatorType["PlusMinus"] = "PlusMinus";
-    OperatorType["Equal"] = "Equal";
-    OperatorType["ClearEntry"] = "ClearEntry";
-    OperatorType["ClearAll"] = "ClearAll";
-    OperatorType["Backspace"] = "Backspace";
-})(OperatorType || (OperatorType = {}));
-class Dom {
-}
+const OperatorType_1 = require("./OperatorType");
 class MainView {
     constructor() {
         this.clickEvent = "click";
@@ -67,11 +76,11 @@ class MainView {
         this.right = 0;
         this.rightAsString = "";
         this.total = 0;
-        this.opType = OperatorType.None;
+        this.opType = OperatorType_1.OperatorType.None;
         this.opTypeHtml = "";
         this.useLeftForSummary = true;
         this.opPressedCount = 0;
-        this.dom = new Dom();
+        this.dom = new Dom_1.default();
         this.ops = new Ops_1.default();
         this.handleBtnContainerClick = (event) => {
             // had to do the event handler this way in order to pass along the correct 'this'
@@ -113,17 +122,17 @@ class MainView {
             console.error("Operation selected is null");
             return;
         }
-        else if (opPressed === OperatorType.Equal) {
+        else if (opPressed === OperatorType_1.OperatorType.Equal) {
             this.computeTotal();
             this.updateViewPipeline(true, htmlContentOfOp);
             return;
         }
-        else if (opPressed == OperatorType.PlusMinus) {
+        else if (opPressed == OperatorType_1.OperatorType.PlusMinus) {
             this.opPressedCount--;
             this.handlePlusMinusCase();
             return;
         }
-        else if (this.opType === OperatorType.None) {
+        else if (this.opType === OperatorType_1.OperatorType.None) {
             this.opType = opPressed;
             this.updateSummaryDisplay(htmlContentOfOp);
             return;
@@ -162,30 +171,26 @@ class MainView {
         this.dom.resultDisplay.innerHTML = pmResult.toString();
     }
     computeTotal() {
-        ;
         this.left = Number(this.leftAsString);
         this.right = Number(this.rightAsString);
         switch (this.opType) {
-            case (OperatorType.None): {
+            case (OperatorType_1.OperatorType.None): {
                 break;
             }
-            case (OperatorType.Add): {
+            case (OperatorType_1.OperatorType.Add): {
                 this.total = this.ops.add(this.left, this.right);
                 break;
             }
-            case (OperatorType.Subtract): {
+            case (OperatorType_1.OperatorType.Subtract): {
                 this.total = this.ops.subtract(this.left, this.right);
                 break;
             }
-            case (OperatorType.Multiply): {
+            case (OperatorType_1.OperatorType.Multiply): {
                 this.total = this.ops.multiply(this.left, this.right);
                 break;
             }
-            case (OperatorType.Divide): {
+            case (OperatorType_1.OperatorType.Divide): {
                 this.total = this.ops.divide(this.left, this.right);
-                break;
-            }
-            case (OperatorType.PlusMinus): {
                 break;
             }
             default: {
@@ -271,7 +276,7 @@ class MainView {
     }
     handleNumberButtonPressed(pressedNumber) {
         this.opPressedCount = 0;
-        if (this.leftAsString === "" || this.opType === OperatorType.None) {
+        if (this.leftAsString === "" || this.opType === OperatorType_1.OperatorType.None) {
             this.leftAsString += pressedNumber;
             this.displayLeft();
         }
@@ -281,15 +286,15 @@ class MainView {
         }
     }
     handleClear(clearData) {
-        if (clearData === OperatorType.ClearAll) {
+        if (clearData === OperatorType_1.OperatorType.ClearAll) {
             this.clearSummaryAndResultDisplay();
             return;
         }
-        if (clearData === OperatorType.ClearEntry) {
+        if (clearData === OperatorType_1.OperatorType.ClearEntry) {
             this.clearResultDisplay();
             return;
         }
-        if (clearData === OperatorType.Backspace) {
+        if (clearData === OperatorType_1.OperatorType.Backspace) {
             this.performBackspaceOnCurrentEntry();
             return;
         }
@@ -365,6 +370,6 @@ class MainView {
     let main = new MainView();
     main.init();
 }());
-},{"./Ops":1,"./StringUtility":2}]},{},[3])
+},{"./Dom":1,"./OperatorType":2,"./Ops":3,"./StringUtility":4}]},{},[5])
 
 //# sourceMappingURL=app.js.map
