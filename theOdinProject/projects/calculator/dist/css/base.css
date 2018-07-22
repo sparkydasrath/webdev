@@ -35,10 +35,13 @@ body {
 }
 
 .result-display {
-    height: 2em;
     text-align: var(--display-text-align);
     vertical-align: var(--display-vertical-align);
     padding: 2px;
+}
+
+body .result-display {
+    font-size: 1.5em;
 }
 
 .outer-wrapper {

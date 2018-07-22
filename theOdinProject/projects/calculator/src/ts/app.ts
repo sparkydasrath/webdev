@@ -96,6 +96,12 @@ class MainView {
             return;
         }
 
+        else if (opPressed == OperatorType.PlusMinus) {
+            this.opPressedCount--;
+            this.handlePlusMinusCase();
+            return;
+        }
+
         else if (this.opType === OperatorType.None) {
             this.opType = <OperatorType>opPressed;
             this.updateSummaryDisplay(htmlContentOfOp);
@@ -122,10 +128,29 @@ class MainView {
         this.displayResult();
     }
 
+    private handlePlusMinusCase(): void {
+        if (this.dom.resultDisplay === null || this.dom.resultDisplay === undefined) {
+            console.error("handlePlusMinusCase(): Unable to find results display");
+            return;
+        }
+
+        let currentDisplay = this.dom.resultDisplay.innerHTML;
+        let convertedToNumber = Number(currentDisplay)
+        let pmResult = this.ops.plusMinus(convertedToNumber);
+
+        if (this.useLeftForSummary) {
+            this.leftAsString = pmResult.toString();
+        }
+        else {
+            this.rightAsString = pmResult.toString();
+        }
+
+        this.dom.resultDisplay.innerHTML = pmResult.toString();
+    }
 
     private computeTotal(): void {
 
-        this.left = Number(this.leftAsString);
+        ; this.left = Number(this.leftAsString);
         this.right = Number(this.rightAsString);
 
         switch (this.opType) {

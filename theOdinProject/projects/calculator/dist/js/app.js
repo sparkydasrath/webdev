@@ -118,6 +118,11 @@ class MainView {
             this.updateViewPipeline(true, htmlContentOfOp);
             return;
         }
+        else if (opPressed == OperatorType.PlusMinus) {
+            this.opPressedCount--;
+            this.handlePlusMinusCase();
+            return;
+        }
         else if (this.opType === OperatorType.None) {
             this.opType = opPressed;
             this.updateSummaryDisplay(htmlContentOfOp);
@@ -140,7 +145,24 @@ class MainView {
         this.updateLeftAndRightValues();
         this.displayResult();
     }
+    handlePlusMinusCase() {
+        if (this.dom.resultDisplay === null || this.dom.resultDisplay === undefined) {
+            console.error("handlePlusMinusCase(): Unable to find results display");
+            return;
+        }
+        let currentDisplay = this.dom.resultDisplay.innerHTML;
+        let convertedToNumber = Number(currentDisplay);
+        let pmResult = this.ops.plusMinus(convertedToNumber);
+        if (this.useLeftForSummary) {
+            this.leftAsString = pmResult.toString();
+        }
+        else {
+            this.rightAsString = pmResult.toString();
+        }
+        this.dom.resultDisplay.innerHTML = pmResult.toString();
+    }
     computeTotal() {
+        ;
         this.left = Number(this.leftAsString);
         this.right = Number(this.rightAsString);
         switch (this.opType) {
