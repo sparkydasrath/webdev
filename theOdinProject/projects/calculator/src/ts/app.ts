@@ -3,6 +3,8 @@ import Dom from "./Dom";
 import { StringUtility } from "./StringUtility";
 import { OperatorType } from "./OperatorType";
 
+const MaxDisplayLength: number = 13;
+
 class MainView {
 
     clickEvent: string = "click";
@@ -69,6 +71,7 @@ class MainView {
         }
         else if (opPressed === OperatorType.Equal) {
             this.computeTotal();
+            this.useLeftForSummary = true;
             this.updateViewPipeline(true, htmlContentOfOp);
             return;
         }
@@ -129,6 +132,8 @@ class MainView {
         this.left = Number(this.leftAsString);
         this.right = Number(this.rightAsString);
 
+        if (this.left === 0 && this.right === 0) return;
+
         switch (this.opType) {
             case (OperatorType.None): {
                 break;
@@ -157,21 +162,25 @@ class MainView {
         }
     }
 
+    private trimmedDisplay(stringToTrim: string, noOfPlacesToKeep: number) {
+        return stringToTrim.substr(0, noOfPlacesToKeep);
+    }
+
     private displayResult(): void {
         if (this.dom.resultDisplay !== null && this.dom.resultDisplay !== undefined) {
-            this.dom.resultDisplay.textContent = `${this.total}`;
+            this.dom.resultDisplay.textContent = this.trimmedDisplay(`${this.total}`, MaxDisplayLength);
         }
     }
 
     private displayLeft(): void {
         if (this.dom.resultDisplay !== null && this.dom.resultDisplay !== undefined) {
-            this.dom.resultDisplay.textContent = this.leftAsString;
+            this.dom.resultDisplay.textContent = this.trimmedDisplay(this.leftAsString, MaxDisplayLength);
         }
     }
 
     private displayRight(): void {
         if (this.dom.resultDisplay !== null && this.dom.resultDisplay !== undefined) {
-            this.dom.resultDisplay.textContent = this.rightAsString;
+            this.dom.resultDisplay.textContent = this.trimmedDisplay(this.rightAsString, MaxDisplayLength);
         }
     }
 
@@ -244,6 +253,7 @@ class MainView {
         this.left = this.total;
         this.rightAsString = "";
         this.right = 0;
+        this.opPressedCount = 0;
     }
 
     private handleNumberButtonPressed(pressedNumber: string): void {

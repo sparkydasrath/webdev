@@ -65,6 +65,7 @@ const Ops_1 = __importDefault(require("./Ops"));
 const Dom_1 = __importDefault(require("./Dom"));
 const StringUtility_1 = require("./StringUtility");
 const OperatorType_1 = require("./OperatorType");
+const MaxDisplayLength = 13;
 class MainView {
     constructor() {
         this.clickEvent = "click";
@@ -124,6 +125,7 @@ class MainView {
         }
         else if (opPressed === OperatorType_1.OperatorType.Equal) {
             this.computeTotal();
+            this.useLeftForSummary = true;
             this.updateViewPipeline(true, htmlContentOfOp);
             return;
         }
@@ -173,6 +175,8 @@ class MainView {
     computeTotal() {
         this.left = Number(this.leftAsString);
         this.right = Number(this.rightAsString);
+        if (this.left === 0 && this.right === 0)
+            return;
         switch (this.opType) {
             case (OperatorType_1.OperatorType.None): {
                 break;
@@ -199,19 +203,22 @@ class MainView {
             }
         }
     }
+    trimmedDisplay(stringToTrim, noOfPlacesToKeep) {
+        return stringToTrim.substr(0, noOfPlacesToKeep);
+    }
     displayResult() {
         if (this.dom.resultDisplay !== null && this.dom.resultDisplay !== undefined) {
-            this.dom.resultDisplay.textContent = `${this.total}`;
+            this.dom.resultDisplay.textContent = this.trimmedDisplay(`${this.total}`, MaxDisplayLength);
         }
     }
     displayLeft() {
         if (this.dom.resultDisplay !== null && this.dom.resultDisplay !== undefined) {
-            this.dom.resultDisplay.textContent = this.leftAsString;
+            this.dom.resultDisplay.textContent = this.trimmedDisplay(this.leftAsString, MaxDisplayLength);
         }
     }
     displayRight() {
         if (this.dom.resultDisplay !== null && this.dom.resultDisplay !== undefined) {
-            this.dom.resultDisplay.textContent = this.rightAsString;
+            this.dom.resultDisplay.textContent = this.trimmedDisplay(this.rightAsString, MaxDisplayLength);
         }
     }
     clearSummaryDisplay() {
@@ -273,6 +280,7 @@ class MainView {
         this.left = this.total;
         this.rightAsString = "";
         this.right = 0;
+        this.opPressedCount = 0;
     }
     handleNumberButtonPressed(pressedNumber) {
         this.opPressedCount = 0;
