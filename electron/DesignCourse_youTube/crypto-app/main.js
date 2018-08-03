@@ -3,15 +3,12 @@ const {
     BrowserWindow,
     Menu,
     ipcMain,
+    Notification
 } = require('electron')
 const shell = require("electron").shell;
 const ipc = ipcMain;
-// const {
-//     Notification
-// } = require("electron");
-const {
-    ToastNotification
-} = require("electron-windows-notifications")
+
+
 const appId = "electron-windows-notifications";
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -24,26 +21,14 @@ function createWindow() {
         height: 600
     })
 
+    app.setAppUserModelId(".com.ssss.ddddd");
+
+
     // and load the index.html of the app.
     win.loadFile('src/index.html')
 
-    // app.setAppUserModelId("com.companyName.softwareName");
-    // app.setAsDefaultProtocolClient('xxxxx');
-    // let nt = new Notification({
-    //     title: "sample",
-    //     body: "test"
-    // });
-    // nt.show();
-
-    let notification = new ToastNotification({
-        appId: appId,
-        template: `<toast><visual><binding template="ToastText01"><text id="1">%s</text></binding></visual></toast>`,
-        strings: ['Hi!']
-    });
-    notification.show();
-
     // Open the DevTools.
-    // win.webContents.openDevTools()
+    win.webContents.openDevTools()
 
     // Emitted when the window is closed.
     win.on('closed', () => {
@@ -115,5 +100,10 @@ app.on('activate', () => {
 });
 
 ipc.on("update-notify-value", (event, arg) => {
+    new Notification({
+        title: "title",
+        body: "bodyyyy"
+    }).show();
+    console.log("in update-notify-value IPC");
     win.webContents.send("targetPriceVal", arg);
 });

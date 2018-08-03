@@ -3,10 +3,8 @@ const electron = require('electron');
 const BrowserWindow = electron.remote.BrowserWindow;
 const axios = require("axios");
 const ipc = electron.ipcRenderer;
-import {
-    app,
-    Notification
-} from "electron";
+const Notification = electron.Notification;
+const app = electron.app;
 
 
 
@@ -26,14 +24,9 @@ function getBTC() {
             const cryptos = res.data.BTC.USD;
             price.innerHTML = "$" + cryptos.toLocaleString("en");
 
-            app.setAppUserModelId("appid");
-            let nt = new Notification(notification.title, notification);
-            nt.show();
-            // myNotification.show();
-            // if (tvp.innerHTML != "" && tvp < res.data.BTC.USD) {
-            //     const myNotification = new Notification(notification.title, notification);
-            // }
+
         })
+
 }
 
 getBTC();
@@ -62,6 +55,16 @@ function handleNotifyBtnClicked(e) {
 }
 
 ipc.on("targetPriceVal", (event, arg) => {
-    tpv = Number(arg);
+    let tpv = Number(arg);
+    console.log("received targetPriceVal IPC", tpv);
+
+    new window.Notification("sample", {
+        body: "test bid"
+    });
+
+    let n = new electron.Notification();
+    console.log(n);
+
+
     targetPrice.innerHTML = "$" + tpv.toLocaleString("en");
 })

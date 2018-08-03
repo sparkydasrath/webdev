@@ -14,6 +14,7 @@ function handleCloseBtnClicked(e) {
 
 updateBtn.addEventListener("click", () => {
     let valueToSend = document.getElementById("notifyVal").value;
+    console.log("sending update-notify-value IPC");
     ipc.send("update-notify-value", valueToSend);
     let win = remote.getCurrentWindow();
     win.close();
