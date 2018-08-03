@@ -6,11 +6,10 @@
   "scripts": {
     "start": "electron ."
   },
-  "author": "meeeeeeeeeeee",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "devDependencies": {
-    "axios": "^0.18.0",
-    "electron": "2.0.6",
-    "electron-windows-notifications": "^2.1.1"
+    "electron": "1.7.9"
   }
 }
