@@ -22,8 +22,9 @@ const commonConfig = {
             //     }
             // },
             {
-                test: /\.tsx?$/,
-                loader: 'awesome-typescript-loader'
+                test: /\.(tsx?)|(jsx?)$/,
+                exclude: /node_modules/,
+                loader: ['babel-loader', 'awesome-typescript-loader']
             },
             {
                 test: /\.(scss|css)$/,
