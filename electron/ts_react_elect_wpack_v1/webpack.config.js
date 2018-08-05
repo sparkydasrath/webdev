@@ -1,10 +1,11 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const commonConfig = {
     mode: 'development',
     output: {
         path: __dirname + "/dist",
-        filename: '[name].js'
+        filename: 'main.js'
     },
     devtool: "source-map",
     resolve: {
@@ -54,15 +55,46 @@ const commonConfig = {
             }
         ]
     },
-    externals: {
-        "react": "React",
-        "react-dom": "ReactDOM"
-    }
+    // externals: {
+    //     "react": "React",
+    //     "react-dom": "ReactDOM",
+    //     electron: "electron"
+    // },
+    node: {
+        __dirname: false,
+        __filename: false,
+    },
+
 }
 
-module.exports = Object.assign({
-        entry: {
-            main: './src/index.tsx'
-        }
-    },
-    commonConfig)
+module.exports = [
+    // Object.assign({
+    //         entry: {
+    //             main: './src/index.tsx'
+    //         }
+    //     },
+    //     commonConfig)
+
+    Object.assign({
+            target: 'electron-main',
+            entry: './src/main.ts',
+            output: {
+                filename: 'main.js',
+                path: __dirname + '/dist',
+            }
+        },
+        commonConfig),
+    Object.assign({
+            target: 'electron-renderer',
+            entry: './src/index.tsx',
+            output: {
+                filename: 'index.bundle.js',
+                path: __dirname + '/dist',
+            },
+            plugins: [new HtmlWebpackPlugin({
+                template: path.resolve(__dirname, './src/index.html'),
+            }), ]
+        },
+        commonConfig)
+
+];
