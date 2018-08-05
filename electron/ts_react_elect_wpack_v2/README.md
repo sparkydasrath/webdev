@@ -16,6 +16,7 @@ Note: as of this writing
 2. typescript version is 3.0.1
 
 npm install --save-dev typescript@3.0.1 
+
 npm install --save-dev @babel/core@7.0.0-beta.56
 npm install --save-dev @babel/cli@7.0.0-beta.56
 npm install --save-dev @babel/plugin-proposal-class-properties@7.0.0-beta.56
@@ -23,6 +24,7 @@ npm install --save-dev @babel/plugin-proposal-object-rest-spread@7.0.0-beta.56
 npm install --save-dev @babel/preset-env@7.0.0-beta.56
 npm install --save-dev @babel/preset-typescript@7.0.0-beta.56
 npm install --save-dev @babel/preset-react@7.0.0-beta.56
+npm install --save-dev babel-preset-env 
 
 package.json now looks like:
 
@@ -56,6 +58,11 @@ package.json now looks like:
     "typescript": "^3.0.1"
   }
 }
+
+## + Webpack
+[Reference](https://github.com/Microsoft/TypeScript-React-Starter#typescript-react-starter)
+
+npm install --save-dev webpack webpack-cli babel-loader@8.0.0-beta.4
 
 
 
