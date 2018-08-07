@@ -6,10 +6,11 @@
   "main": "./dist/main.bundle.js",
   "scripts": {
     "start": "electron ./dist/main.bundle.js",
-    "dev": "webpack --watch --config ./webpack.dev.js --progress --colors",
+    "dev": "webpack --watch --config ./webpack.dev.js --progress --colors --enable-logging",
     "prod": "webpack --config ./webpack.prod.js --progress --colors"
   },
   "devDependencies": {
+    "@types/node": "^10.5.7",
     "awesome-typescript-loader": "^5.2.0",
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^1.0.0",

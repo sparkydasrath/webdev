@@ -2,9 +2,11 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const webpack = require("webpack");
 
 let mainConfig = {
     mode: 'development',
+    devtool: "source-map",
     entry: './src/main/main.ts',
     target: 'electron-main',
     output: {
@@ -41,12 +43,23 @@ let mainConfig = {
                     name: '[path][name].[ext]',
                 },
             },
+            {
+                enforce: "pre",
+                test: /\.js$/,
+                loader: "source-map-loader"
+            }
         ],
     },
+    plugins: [
+        new webpack.SourceMapDevToolPlugin({
+            filename: '[name].js.map'
+        })
+    ],
 };
 
 let rendererConfig = {
     mode: 'development',
+    devtool: "source-map",
     entry: './src/renderer/index.tsx',
     target: 'electron-renderer',
     output: {
@@ -91,10 +104,18 @@ let rendererConfig = {
                     name: '[path][name].[ext]',
                 },
             },
+            {
+                enforce: "pre",
+                test: /\.js$/,
+                loader: "source-map-loader"
+            }
         ],
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
+        new webpack.SourceMapDevToolPlugin({
+            filename: '[name].js.map'
+        }),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, './src/renderer/index.html'),
         }),
