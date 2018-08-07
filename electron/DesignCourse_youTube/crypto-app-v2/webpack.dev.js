@@ -51,9 +51,7 @@ let mainConfig = {
         ],
     },
     plugins: [
-        new webpack.SourceMapDevToolPlugin({
-            filename: '[name].js.map'
-        })
+
     ],
 };
 
@@ -113,9 +111,6 @@ let rendererConfig = {
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
-        new webpack.SourceMapDevToolPlugin({
-            filename: '[name].js.map'
-        }),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, './src/renderer/index.html'),
         }),

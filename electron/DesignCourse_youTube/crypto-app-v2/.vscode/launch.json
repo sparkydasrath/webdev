@@ -10,6 +10,7 @@
             "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
             "cwd": "${workspaceRoot}",
             "runtimeArgs": [
+                ".",
                 "--enable-logging",
                 "--remote-debugging-port=9223"
             ],
@@ -25,7 +26,8 @@
             "name": "Electron: Renderer",
             "type": "chrome",
             "request": "attach",
-            "webRoot": "${workspaceRoot}/dist",
+            "port": 9223,
+            "webRoot": "${workspaceRoot}",
             "sourceMaps": true,
             "internalConsoleOptions": "openOnSessionStart",
             "timeout": 30000
