@@ -8,6 +8,7 @@ export default class App extends React.Component<{}, {
     private createWindow;
     handleNotifyBtnClicked: () => void;
     getBtc: () => void;
+    componentDidMount(): void;
     render(): JSX.Element;
 }
 //# sourceMappingURL=App.d.ts.map

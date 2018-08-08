@@ -31,7 +31,6 @@ export default class App extends React.Component<{}, { price: any }> {
     }
 
     handleNotifyBtnClicked = (): void => {
-        this.getBtc();
         this.addWindow = this.createWindow();
         // this.addWindow.webContents.openDevTools();
 
@@ -57,6 +56,11 @@ export default class App extends React.Component<{}, { price: any }> {
                 const cryptos = (res.data.BTC.USD).toLocaleString("en");
                 this.setState({ price: cryptos });
             })
+    }
+
+    componentDidMount() {
+        this.getBtc();
+        setInterval(this.getBtc, 10000);
     }
 
     public render() {
