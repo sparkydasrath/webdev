@@ -1,5 +1,6 @@
 import * as React from "react";
-import "./App.css";
+// import * as ReactDOM from "react-dom";
+import "../App.css";
 import "./Add.css";
 // import electron from "electron";
 // import { remote, ipcRenderer } from "electron";

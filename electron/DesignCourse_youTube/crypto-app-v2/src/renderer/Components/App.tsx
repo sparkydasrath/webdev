@@ -1,41 +1,61 @@
 import * as React from "react";
 import "./App.css";
 import * as electron from "electron";
-const { BrowserWindow } = require('electron').remote
+// const { BrowserWindow } = require('electron').remote
+import * as path from 'path';
+import * as url from 'url';
+import "./Add/Add";
+import "./Add/Add";
 
 
 export default class App extends React.PureComponent {
 
-    private addWindow: electron.BrowserWindow | null = null;
+    // private addWindow: electron.BrowserWindow | null = null;
+    private addWindow: any = null;
 
-    private createWindow(): electron.BrowserWindow {
-        console.log("creating add window");
+    private createWindow(): any {
 
-        let bw = new BrowserWindow({
+        let bw = new electron.remote.BrowserWindow({
             width: 400,
             height: 200,
             frame: true,
-            transparent: true,
+            transparent: false,
             alwaysOnTop: true
         });
-
-        console.log("value of addWindow", bw);
 
         return bw;
     }
 
     handleNotifyBtnClicked = (): void => {
-        console.log("notify button clicked.....");
 
         this.addWindow = this.createWindow();
 
 
+
+        // this.addWindow.loadFile("./Add.tsx");
+
+        // let finalPath = url.format({
+        //     pathname: path.join(__dirname, './Add.tsx'),
+        //     protocol: 'file:',
+        //     slashes: true,
+        // });
+
+
+        this.addWindow.loadURL(
+            url.format({
+                pathname: path.join(__dirname, './Add.tsx'),
+                protocol: 'file:',
+                slashes: true,
+            })
+        );
+
+        // this.addWindow.loadURL('https://github.com');
+
         this.addWindow.on("close", () => {
-            console.log("disposing modal window");
             this.addWindow = null;
         });
 
-        this.addWindow.loadFile("./Add.tsx");
+
         this.addWindow.show();
     };
 

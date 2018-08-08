@@ -74,7 +74,7 @@ let rendererConfig = {
     module: {
         rules: [{
                 // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
-                test: /\.(ts|tsx)$/,
+                test: /\.tsx?$/,
                 exclude: /node_modules/,
                 use: {
                     loader: 'awesome-typescript-loader',
@@ -112,8 +112,12 @@ let rendererConfig = {
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, './src/renderer/Components/Add/add.html'),
+        }),
+        new HtmlWebpackPlugin({
             template: path.resolve(__dirname, './src/renderer/index.html'),
         }),
+
     ],
 };
 
