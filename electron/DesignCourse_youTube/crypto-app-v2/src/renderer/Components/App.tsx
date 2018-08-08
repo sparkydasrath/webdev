@@ -3,11 +3,19 @@ import "./App.css";
 import * as electron from "electron";
 import * as path from 'path';
 import * as url from 'url';
+import axios from "axios";
 
 
-export default class App extends React.PureComponent {
+export default class App extends React.Component<{}, { price: any }> {
 
     private addWindow: electron.BrowserWindow | null = null;
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            price: "Loading...."
+        };
+    }
 
     private createWindow(): electron.BrowserWindow {
 
@@ -23,7 +31,7 @@ export default class App extends React.PureComponent {
     }
 
     handleNotifyBtnClicked = (): void => {
-
+        this.getBtc();
         this.addWindow = this.createWindow();
         // this.addWindow.webContents.openDevTools();
 
@@ -43,6 +51,13 @@ export default class App extends React.PureComponent {
         this.addWindow.show();
     };
 
+    getBtc = () => {
+        axios.get("https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC&tsyms=USD")
+            .then(res => {
+                const cryptos = (res.data.BTC.USD).toLocaleString("en");
+                this.setState({ price: cryptos });
+            })
+    }
 
     public render() {
         return (
@@ -50,7 +65,7 @@ export default class App extends React.PureComponent {
             <div className="row">
                 <div id="price-container">
                     <p className="subtext">Current BTC Px</p>
-                    <h1 id="price">Loading....</h1>
+                    <h1 id="price">{this.state.price}</h1>
                 </div>
 
                 <div id="goal-container">
