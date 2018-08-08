@@ -2,7 +2,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const webpack = require("webpack");
 
 let mainConfig = {
     mode: 'development',
@@ -58,10 +57,13 @@ let mainConfig = {
 let rendererConfig = {
     mode: 'development',
     devtool: "source-map",
-    entry: './src/renderer/index.tsx',
+    entry: {
+        index: './src/renderer/index.tsx',
+        addComp: './src/renderer/Components/Add/Add.tsx'
+    },
     target: 'electron-renderer',
     output: {
-        filename: 'index.bundle.js',
+        filename: '[name].bundle.js',
         path: __dirname + '/dist',
     },
     node: {
@@ -112,12 +114,14 @@ let rendererConfig = {
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, './src/renderer/Components/Add/add.html'),
+            template: path.resolve(__dirname, './src/renderer/index.html'),
+            chunksSortMode: 'none'
         }),
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, './src/renderer/index.html'),
+            filename: "add.html",
+            template: path.resolve(__dirname, './src/renderer/Components/Add/add.html'),
+            chunksSortMode: 'none'
         }),
-
     ],
 };
 

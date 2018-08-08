@@ -1,19 +1,15 @@
 import * as React from "react";
 import "./App.css";
 import * as electron from "electron";
-// const { BrowserWindow } = require('electron').remote
 import * as path from 'path';
 import * as url from 'url';
-import "./Add/Add";
-import "./Add/Add";
 
 
 export default class App extends React.PureComponent {
 
-    // private addWindow: electron.BrowserWindow | null = null;
-    private addWindow: any = null;
+    private addWindow: electron.BrowserWindow | null = null;
 
-    private createWindow(): any {
+    private createWindow(): electron.BrowserWindow {
 
         let bw = new electron.remote.BrowserWindow({
             width: 400,
@@ -29,27 +25,15 @@ export default class App extends React.PureComponent {
     handleNotifyBtnClicked = (): void => {
 
         this.addWindow = this.createWindow();
-
-
-
-        // this.addWindow.loadFile("./Add.tsx");
-
-        // let finalPath = url.format({
-        //     pathname: path.join(__dirname, './Add.tsx'),
-        //     protocol: 'file:',
-        //     slashes: true,
-        // });
-
+        // this.addWindow.webContents.openDevTools();
 
         this.addWindow.loadURL(
             url.format({
-                pathname: path.join(__dirname, './Add.tsx'),
+                pathname: path.join(__dirname, './add.html'),
                 protocol: 'file:',
                 slashes: true,
             })
         );
-
-        // this.addWindow.loadURL('https://github.com');
 
         this.addWindow.on("close", () => {
             this.addWindow = null;
@@ -58,8 +42,6 @@ export default class App extends React.PureComponent {
 
         this.addWindow.show();
     };
-
-
 
 
     public render() {
