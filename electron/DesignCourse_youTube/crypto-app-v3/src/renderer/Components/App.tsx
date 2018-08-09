@@ -1,40 +1,27 @@
 import * as React from "react";
 import "./App.css";
-import axios from "axios";
+import "./CoinCurrencyCard"
+import CoinCurrencyCard from "./CoinCurrencyCard";
+import "./ICoinCurrencyDisplay";
 
-
-interface IAppState {
-    price: number,
-    fullObj: {}
-}
-
-
-export default class App extends React.Component<{}, IAppState> {
+export default class App extends React.Component<{}, ICoinCurrencyDisplay> {
 
     constructor(props) {
         super(props);
         this.state = {
-            price: 0,
-            fullObj: {
-            }
+            DISPLAY: {} // cheating here a bit to not initialize all the fields to default values
         };
     }
 
     getBtc = () => {
-        axios.get("https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC&tsyms=USD")
-            .then(res => {
-                const cryptos = (res.data.BTC.USD).toLocaleString("en");
-                this.setState({ price: cryptos });
-            })
-
-        fetch("https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC&tsyms=USD")
+        fetch("https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH&tsyms=USD,EUR,JPY")
             .then(res => {
                 let resJson = res.json();
                 return resJson;
             })
             .then(data => {
-                console.log("data = ", data);
-                this.setState({ fullObj: { ...data.DISPLAY.BTC.USD } })
+                console.log(data);
+                this.setState({ DISPLAY: { ...data.DISPLAY } })
             })
     }
 
@@ -50,17 +37,25 @@ export default class App extends React.Component<{}, IAppState> {
             <div className="appRoot">
                 {entries.map(coin => {
                     return (
-                        <div >
+                        <div key={coin[0]}>
                             <span>{coin[0]}</span>
                             <span>{coin[1]}</span>
                         </div>);
                 })}
             </div>
+        );
+    }
 
+    printProperties2() {
+        return (
+            <div className="appRoot">
+                <CoinCurrencyCard DISPLAY={this.state.DISPLAY} />
+            </div>
         );
     }
 
     public render() {
-        return (this.printProperties(this.state.fullObj));
+        return (this.printProperties2());
     }
 }
+
