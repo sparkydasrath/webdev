@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,600');
+body {
+    background: #262626;
+    color: #fff;
+    font-family: 'Montserrat';
+    margin: 0;
+}
+
+.appRoot {
+    color: #fff;
+    font-family: 'Montserrat';
+    margin: 0;
+}
