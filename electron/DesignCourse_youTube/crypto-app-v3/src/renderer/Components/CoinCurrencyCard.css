@@ -1,3 +1,22 @@
 .currencyCardRoot {
-    border: 1px solid red;
+    background-color: gray;
+    margin: 5px;
+    padding: 5px;
+}
+
+.priceCoinCurrencyContainer {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.volumesContainer {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-content: stretch;
+    align-items: stretch;
+}
+
+.leftAlignedContainer {
+    justify-self: left;
 }

@@ -28,8 +28,9 @@ export default class App extends React.Component<{}, IAppState> {
     }
 
     updateState(data: ICoinCurrencyDisplay[]): void {
+        // console.log("Price before set state = ", data[0].Fields!.PRICE);
         this.setState({ coinCurrs: data });
-
+        // console.log("Price after set state = ", this.state.coinCurrs[0].Fields!.PRICE);
     }
 
     flattenReturnedData(data: object): ICoinCurrencyDisplay[] {
@@ -60,38 +61,18 @@ export default class App extends React.Component<{}, IAppState> {
 
     componentDidMount() {
         this.getBtc();
-        setInterval(this.getBtc, 5000);
+        setInterval(this.getBtc, 1500);
     }
 
-    printProperties(objectToPrint: object) {
-        if (Object.keys(objectToPrint).length === 0) return null;
-        let entries = Object.entries(objectToPrint);
-        return (
-            <div className="appRoot">
-                {entries.map(coin => {
-                    return (
-                        <div key={coin[0]}>
-                            <span>{coin[0]}</span>
-                            <span>{coin[1]}</span>
-                        </div>);
-                })}
-            </div>
-        );
-    }
-
-    printProperties2() {
+    public render() {
         return (
             <div className="appRoot">
                 {this.state.coinCurrs.map(s => {
-                    return (<CoinCurrencyCard {...s} />);
+                    return (<CoinCurrencyCard key={s.Key} {...s} />);
                 }
                 )}
             </div>
         );
-    }
-
-    public render() {
-        return (this.printProperties2());
     }
 }
 
