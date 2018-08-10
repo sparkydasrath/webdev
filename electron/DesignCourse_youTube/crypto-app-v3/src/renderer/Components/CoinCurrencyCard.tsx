@@ -15,8 +15,8 @@ class PriceCoinCurrencyComponent extends React.Component<IPriceCoinCurrencyCompo
     render() {
         return (
             <div className="priceCoinCurrencyContainer">
-                <div>{this.props.price}</div>
-                <div>{this.props.coinCurrency}</div>
+                <div className="coinCurrency" >{this.props.coinCurrency}</div>
+                <div className="price">{this.props.price}</div>
             </div>
         );
     }
@@ -29,18 +29,18 @@ class VolumesComponent extends React.Component<ICommonProperties, {}>{
     }
     render() {
         return (
-            <div className="volumesContainer">
-                <div className="leftAlignedContainer">
-                    <div>Direct Vol. 24H</div>
-                    <div>{this.props.VOLUME24HOUR}</div>
+            <div className="volumesContainer ">
+                <div>
+                    <div className="volContainerHeaderText">Direct Vol. 24H</div>
+                    <div className="volContainerValueText" >{this.props.VOLUME24HOUR}</div>
                 </div>
-                <div className="leftAlignedContainer">
-                    <div>Total Vol. 24H</div>
-                    <div>{this.props.TOTALVOLUME24H}</div>
+                <div>
+                    <div className="volContainerHeaderText">Total Vol. 24H</div>
+                    <div className="volContainerValueText" >{this.props.TOTALVOLUME24H}</div>
                 </div>
-                <div className="leftAlignedContainer">
-                    <div>Market Cap</div>
-                    <div>{this.props.MKTCAP}</div>
+                <div>
+                    <div className="volContainerHeaderText">Market Cap</div>
+                    <div className="volContainerValueText" >{this.props.MKTCAP}</div>
                 </div>
             </div>
         );

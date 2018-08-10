@@ -59,7 +59,6 @@ let rendererConfig = {
     devtool: "source-map",
     entry: {
         index: './src/renderer/index.tsx',
-        addComp: './src/renderer/Components/Add/Add.tsx'
     },
     target: 'electron-renderer',
     output: {
@@ -115,11 +114,6 @@ let rendererConfig = {
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, './src/renderer/index.html'),
-            chunksSortMode: 'none'
-        }),
-        new HtmlWebpackPlugin({
-            filename: "add.html",
-            template: path.resolve(__dirname, './src/renderer/Components/Add/add.html'),
             chunksSortMode: 'none'
         }),
     ],
