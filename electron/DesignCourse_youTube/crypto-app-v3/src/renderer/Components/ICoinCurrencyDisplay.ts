@@ -29,18 +29,26 @@ interface ICommonProperties {
 
 }
 
+// interface ICoinCurrencyDisplay {
+//     DISPLAY: {
+//         BTC?: {
+//             USD: ICommonProperties,
+//             EUR: ICommonProperties,
+//             JPY: ICommonProperties
+//         },
+//         ETH?: {
+//             USD: ICommonProperties,
+//             EUR: ICommonProperties,
+//             JPY: ICommonProperties
+//         }
+//     }
+// }
+
 interface ICoinCurrencyDisplay {
-    DISPLAY: {
-        BTC?: {
-            USD: ICommonProperties,
-            EUR: ICommonProperties,
-            JPY: ICommonProperties
-        },
-        ETH?: {
-            USD: ICommonProperties,
-            EUR: ICommonProperties,
-            JPY: ICommonProperties
-        }
-    }
+    Key:string,
+    Coin: string,
+    Currency: string,
+    Fields?: ICommonProperties
 }
+
 

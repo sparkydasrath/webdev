@@ -4,13 +4,15 @@ import "./CoinCurrencyCard"
 import CoinCurrencyCard from "./CoinCurrencyCard";
 import "./ICoinCurrencyDisplay";
 
-export default class App extends React.Component<{}, ICoinCurrencyDisplay> {
+interface IAppState {
+    coinCurrs: ICoinCurrencyDisplay[];
+}
+
+export default class App extends React.Component<{}, IAppState> {
 
     constructor(props) {
         super(props);
-        this.state = {
-            DISPLAY: {} // cheating here a bit to not initialize all the fields to default values
-        };
+        this.state = { coinCurrs: [] }
     }
 
     getBtc = () => {
@@ -20,9 +22,40 @@ export default class App extends React.Component<{}, ICoinCurrencyDisplay> {
                 return resJson;
             })
             .then(data => {
-                console.log(data);
-                this.setState({ DISPLAY: { ...data.DISPLAY } })
+                let flattened = this.flattenReturnedData(data.DISPLAY);
+                this.updateState(flattened);
             })
+    }
+
+    updateState(data: ICoinCurrencyDisplay[]): void {
+        this.setState({ coinCurrs: data });
+
+    }
+
+    flattenReturnedData(data: object): ICoinCurrencyDisplay[] {
+        let coinKeys = Object.keys(data); // will return BTC, ETH
+        if (coinKeys.length === 0) return [];
+
+        let flattenedObjects: ICoinCurrencyDisplay[] = [];
+
+        for (let i = 0; i < coinKeys.length; i++) {
+            const coin = coinKeys[i];
+
+            let currencyKeys = Object.keys(data[coin.toString()]); // will return USD, JPY
+
+            for (let j = 0; j < currencyKeys.length; j++) {
+                const currency = currencyKeys[j];
+                let flattenedObj = {
+                    Key: coin.toString() + currency.toString(),
+                    Coin: coin.toString(),
+                    Currency: currency.toString(),
+                    Fields: (data[coin.toString()])[currency]
+                };
+                flattenedObjects.push(flattenedObj as ICoinCurrencyDisplay);
+            }
+        }
+
+        return flattenedObjects;
     }
 
     componentDidMount() {
@@ -49,7 +82,10 @@ export default class App extends React.Component<{}, ICoinCurrencyDisplay> {
     printProperties2() {
         return (
             <div className="appRoot">
-                <CoinCurrencyCard DISPLAY={this.state.DISPLAY} />
+                {this.state.coinCurrs.map(s => {
+                    return (<CoinCurrencyCard {...s} />);
+                }
+                )}
             </div>
         );
     }

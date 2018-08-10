@@ -3,6 +3,6 @@ import "./CoinCurrencyCard.css";
 import "./ICoinCurrencyDisplay";
 export default class CoinCurrencyCard extends React.Component<ICoinCurrencyDisplay, {}> {
     constructor(props: ICoinCurrencyDisplay);
-    render(): JSX.Element | null;
+    render(): JSX.Element;
 }
 //# sourceMappingURL=CoinCurrencyCard.d.ts.map
