@@ -1,11 +1,12 @@
 import * as React from "react";
 import "./CoinCurrencyCard.css";
-import "./ICoinCurrencyDisplay";
 import { ICommonProperties, ICoinCurrencyDisplay } from "./ICoinCurrencyDisplay";
+import { Direction } from "./Direction";
 
 interface IPriceCoinCurrencyComponent {
     price: string,
-    coinCurrency: string
+    coinCurrency: string,
+    direction: Direction,
 }
 
 class PriceCoinCurrencyComponent extends React.Component<IPriceCoinCurrencyComponent, {}> {
@@ -14,12 +15,25 @@ class PriceCoinCurrencyComponent extends React.Component<IPriceCoinCurrencyCompo
     }
 
     render() {
+
+        let classByDirection: string = "priceUnchanged";
+        if (this.props.direction === Direction.Up) {
+            classByDirection = "price priceUp";
+        }
+        else if (this.props.direction === Direction.Down) {
+            classByDirection = "price priceDown";
+
+        }
+        else {
+            classByDirection = "price priceUnchanged";
+        }
+
         return (
             <div className="priceCoinCurrencyContainer">
                 <div className="coinCurrencyWrapper">
                     <div className="coinCurrency" >{this.props.coinCurrency}</div>
                 </div>
-                <div className="price">{this.props.price}</div>
+                <div className={classByDirection}>{this.props.price}</div>
             </div>
         );
     }
@@ -62,7 +76,7 @@ export default class CoinCurrencyCard extends React.Component<ICoinCurrencyDispl
     public render() {
         return (
             <div className="currencyCardRoot">
-                <PriceCoinCurrencyComponent price={this.props.Fields!.PRICE} coinCurrency={this.coinCurency} />
+                <PriceCoinCurrencyComponent price={this.props.Fields!.PRICE} coinCurrency={this.coinCurency} direction={this.props.PriceDirection} />
                 <VolumesComponent {...this.props.Fields!} />
             </div>
 

@@ -94,7 +94,7 @@ export default class App extends React.Component<{}, IAppState> {
 
     componentDidMount() {
         this.getBtc();
-        setInterval(this.getBtc, 1500);
+        setInterval(this.getBtc, 1000);
     }
 
     public render() {

@@ -1,12 +1,15 @@
 :root {
     --main-bg-color: transparent;
     --section-bg-color: #333333;
+    --card-border-color: #333333;
     --leftMargin-5px: 0 0 0 5px;
     --volContainerItemMargin: 5px;
+    --price-color-transition: color 1s;
 }
 
 .currencyCardRoot {
-    border: 1px solid #333333;
+    border: 1px solid;
+    border-color: var(--card-border-color);
     background-color: var(--main-bg-color);
     margin: 15px;
 }
@@ -49,10 +52,12 @@
 
 .priceUp {
     color: green;
+    transition: var(--price-color-transition);
 }
 
 .priceDown {
     color: red;
+    transition: var(--price-color-transition);
 }
 
 .priceUnchanged {
