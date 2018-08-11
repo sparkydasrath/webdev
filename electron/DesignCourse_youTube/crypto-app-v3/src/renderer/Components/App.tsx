@@ -2,7 +2,8 @@ import * as React from "react";
 import "./App.css";
 import "./CoinCurrencyCard"
 import CoinCurrencyCard from "./CoinCurrencyCard";
-import "./ICoinCurrencyDisplay";
+import { ICoinCurrencyDisplay } from "./ICoinCurrencyDisplay";
+import { Direction } from "./Direction";
 
 interface IAppState {
     coinCurrs: ICoinCurrencyDisplay[];
@@ -22,7 +23,7 @@ export default class App extends React.Component<{}, IAppState> {
                 return resJson;
             })
             .then(data => {
-                let flattened = this.flattenReturnedData(data.DISPLAY);
+                let flattened = this.flattenReturnedData(data.DISPLAY, data.RAW);
                 this.updateState(flattened);
             })
     }
@@ -33,8 +34,8 @@ export default class App extends React.Component<{}, IAppState> {
         // console.log("Price after set state = ", this.state.coinCurrs[0].Fields!.PRICE);
     }
 
-    flattenReturnedData(data: object): ICoinCurrencyDisplay[] {
-        let coinKeys = Object.keys(data); // will return BTC, ETH
+    flattenReturnedData(displayData: object, rawData: object): ICoinCurrencyDisplay[] {
+        let coinKeys = Object.keys(displayData); // will return BTC, ETH
         if (coinKeys.length === 0) return [];
 
         let flattenedObjects: ICoinCurrencyDisplay[] = [];
@@ -42,21 +43,53 @@ export default class App extends React.Component<{}, IAppState> {
         for (let i = 0; i < coinKeys.length; i++) {
             const coin = coinKeys[i];
 
-            let currencyKeys = Object.keys(data[coin.toString()]); // will return USD, JPY
+            let currencyKeys = Object.keys(displayData[coin.toString()]); // will return USD, JPY
 
             for (let j = 0; j < currencyKeys.length; j++) {
                 const currency = currencyKeys[j];
+                let key = coin.toString() + currency.toString();
+                let rawPrice = ((rawData[coin.toString()])[currency])["PRICE"];
                 let flattenedObj = {
-                    Key: coin.toString() + currency.toString(),
+                    Key: key,
                     Coin: coin.toString(),
                     Currency: currency.toString(),
-                    Fields: (data[coin.toString()])[currency]
+                    RawPrice: rawPrice,
+                    PriceDirection: this.getPriceDirection(rawPrice, key),
+                    Fields: (displayData[coin.toString()])[currency]
                 };
+                //console.log(`Key = ${key}  direction=${flattenedObj["PriceDirection"]}`);
                 flattenedObjects.push(flattenedObj as ICoinCurrencyDisplay);
             }
         }
 
         return flattenedObjects;
+    }
+
+    getPriceDirection(rawPrice: number, key: string): Direction {
+        // need to revisit how this component's state is stored - needs to be associateive array
+        // as I keep iterating this array to find the one i need to compare with
+
+        let itemToCompareTo: ICoinCurrencyDisplay = {
+            Key: "",
+            Coin: "",
+            Currency: "",
+            RawPrice: 0,
+            PriceDirection: Direction.None
+        };
+        let pxDir: Direction = Direction.None;
+
+        for (let i = 0; i < this.state.coinCurrs.length; i++) {
+            const element = this.state.coinCurrs[i];
+            if (element.Key !== key) continue;
+            itemToCompareTo = element;
+        }
+
+        if (itemToCompareTo === undefined) return Direction.None;
+
+        if (rawPrice > itemToCompareTo.RawPrice) pxDir = Direction.Up;
+        else if (rawPrice < itemToCompareTo.RawPrice) pxDir = Direction.Down;
+        else pxDir = Direction.None;
+        return pxDir;
     }
 
     componentDidMount() {

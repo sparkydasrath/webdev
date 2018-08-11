@@ -1,4 +1,5 @@
-interface ICommonProperties {
+import { Direction } from "./Direction";
+export interface ICommonProperties {
     CHANGE24HOUR: string;
     CHANGEDAY: string;
     CHANGEPCT24HOUR: string;
@@ -27,10 +28,12 @@ interface ICommonProperties {
     VOLUMEDAY: string;
     VOLUMEDAYTO: string;
 }
-interface ICoinCurrencyDisplay {
+export interface ICoinCurrencyDisplay {
     Key: string;
     Coin: string;
     Currency: string;
+    RawPrice: number;
+    PriceDirection: Direction;
     Fields?: ICommonProperties;
 }
 //# sourceMappingURL=ICoinCurrencyDisplay.d.ts.map

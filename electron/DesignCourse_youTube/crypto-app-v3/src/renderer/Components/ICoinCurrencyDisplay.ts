@@ -1,4 +1,6 @@
-interface ICommonProperties {
+import { Direction } from "./Direction";
+
+export interface ICommonProperties {
     CHANGE24HOUR: string,
     CHANGEDAY: string,
     CHANGEPCT24HOUR: string,
@@ -29,25 +31,12 @@ interface ICommonProperties {
 
 }
 
-// interface ICoinCurrencyDisplay {
-//     DISPLAY: {
-//         BTC?: {
-//             USD: ICommonProperties,
-//             EUR: ICommonProperties,
-//             JPY: ICommonProperties
-//         },
-//         ETH?: {
-//             USD: ICommonProperties,
-//             EUR: ICommonProperties,
-//             JPY: ICommonProperties
-//         }
-//     }
-// }
-
-interface ICoinCurrencyDisplay {
-    Key:string,
+export interface ICoinCurrencyDisplay {
+    Key: string,
     Coin: string,
     Currency: string,
+    RawPrice: number,
+    PriceDirection: Direction,
     Fields?: ICommonProperties
 }
 

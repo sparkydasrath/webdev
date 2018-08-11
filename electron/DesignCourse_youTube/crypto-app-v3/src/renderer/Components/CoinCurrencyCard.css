@@ -46,3 +46,15 @@
 .volContainerValueText {
     margin: var(--volContainerItemMargin);
 }
+
+.priceUp {
+    color: green;
+}
+
+.priceDown {
+    color: red;
+}
+
+.priceUnchanged {
+    color: white;
+}

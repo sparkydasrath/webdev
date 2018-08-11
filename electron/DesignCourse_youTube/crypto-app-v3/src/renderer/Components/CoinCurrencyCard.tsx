@@ -1,6 +1,7 @@
 import * as React from "react";
 import "./CoinCurrencyCard.css";
 import "./ICoinCurrencyDisplay";
+import { ICommonProperties, ICoinCurrencyDisplay } from "./ICoinCurrencyDisplay";
 
 interface IPriceCoinCurrencyComponent {
     price: string,
