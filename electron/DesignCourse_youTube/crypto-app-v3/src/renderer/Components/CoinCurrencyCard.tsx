@@ -15,7 +15,9 @@ class PriceCoinCurrencyComponent extends React.Component<IPriceCoinCurrencyCompo
     render() {
         return (
             <div className="priceCoinCurrencyContainer">
-                <div className="coinCurrency" >{this.props.coinCurrency}</div>
+                <div className="coinCurrencyWrapper">
+                    <div className="coinCurrency" >{this.props.coinCurrency}</div>
+                </div>
                 <div className="price">{this.props.price}</div>
             </div>
         );

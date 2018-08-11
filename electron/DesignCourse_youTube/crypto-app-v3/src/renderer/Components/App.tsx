@@ -16,7 +16,7 @@ export default class App extends React.Component<{}, IAppState> {
     }
 
     getBtc = () => {
-        fetch("https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,EOS,BCH,LTC&tsyms=USD,EUR,JPY")
+        fetch("https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,EOS,BCH,LTC&tsyms=USD,EUR,GBP,JPY")
             .then(res => {
                 let resJson = res.json();
                 return resJson;

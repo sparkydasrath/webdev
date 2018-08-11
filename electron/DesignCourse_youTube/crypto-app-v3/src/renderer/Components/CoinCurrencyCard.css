@@ -1,36 +1,41 @@
 :root {
     --main-bg-color: transparent;
-    --coinCurrPxMargin: 5px;
+    --section-bg-color: #333333;
+    --leftMargin-5px: 0 0 0 5px;
     --volContainerItemMargin: 5px;
 }
 
 .currencyCardRoot {
-    border: 1px solid gray;
+    border: 1px solid #333333;
     background-color: var(--main-bg-color);
-    margin: 5px;
-    padding: 5px;
+    margin: 15px;
 }
 
 .priceCoinCurrencyContainer {
-    margin: 5px 5px 15px 5px;
+    margin: 0 0 15px 0;
+}
+
+.coinCurrencyWrapper {
+    background-color: var(--section-bg-color);
 }
 
 .coinCurrency {
     font-size: 1em;
     padding: 0.25em;
     font-weight: bold;
-    margin: var(--coinCurrPxMargin);
+    margin: var(-leftMargin-5px);
 }
 
 .price {
     font-size: 3em;
-    margin: var(--coinCurrPxMargin);
+    margin: var(-leftMargin-5px);
 }
 
 .volumesContainer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     justify-items: stretch;
+    background: linear-gradient(transparent, var(--section-bg-color));
 }
 
 .volContainerHeaderText {
