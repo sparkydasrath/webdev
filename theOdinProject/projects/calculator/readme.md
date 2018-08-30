@@ -16,5 +16,13 @@ Additionally, I ran into a problem with the 'this' context getting lost when han
 1. In the terminal, just type in "gulp" to compile all the typescript
 2. Right click on the views/index.html and select "Open with live server"
 
+**Screenshots**
+
+Web Version
+[logo]: https://github.com/sparkydasrath/media/blob/master/calculator/jsCalc.png "Web Version"
+
+Windows 10 (for comparison)
+[logo]: https://github.com/sparkydasrath/media/blob/master/calculator/windows10Calc.png "Windows 10"
+
 **Tasks**
 Tasks are tracked on: https://trello.com/b/Yt2qm3lw
