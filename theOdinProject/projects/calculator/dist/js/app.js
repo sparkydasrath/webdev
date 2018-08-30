@@ -106,21 +106,7 @@ class MainView {
                 return;
             }
             let bcr = this.dom.buttonContainer.getBoundingClientRect();
-            console.log(`bcRect:${bcr.left}-${bcr.top}, cx:${event.clientX}, cy:${event.clientY}`);
             Effects_1.default.reveal(this.dom.buttonContainer, Effects_1.default.updateGradient(event.clientX - bcr.left, event.clientY - bcr.top));
-            // let children = this.dom.buttonContainer.children;
-            // if (children.length <= 0) return;
-            // for (let i = 0; i < children.length; i++) {
-            //     const bc = children[i];
-            //     let clientRect = bc.getBoundingClientRect();
-            //     let top = clientRect.top + document.body.scrollTop;
-            //     let left = clientRect.left + document.body.scrollLeft;
-            //     let x = (<MouseEvent>event).clientX - left;
-            //     let y = (<MouseEvent>event).clientY - top;
-            //     // console.log(`left: ${left}, top: ${top}, x:${x}, y:${y}, cRL:${(<MouseEvent>event).clientX}, cRT:${(<MouseEvent>event).clientY}, cx:${(<MouseEvent>event).clientX}, cy:${(<MouseEvent>event).clientY}`);
-            //     console.log(`${(<MouseEvent>event).clientX + x}, ${(<MouseEvent>event).clientX + y}`);
-            //     Effect.reveal(this.dom.buttonContainer, Effect.updateGradient((<MouseEvent>event).clientX + x, (<MouseEvent>event).clientY) + y);
-            // }
         };
         this.handleBtnContainerClick = (event) => {
             // had to do the event handler this way in order to pass along the correct 'this'
