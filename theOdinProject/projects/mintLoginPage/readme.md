@@ -4,6 +4,11 @@
 
 Using HTML5 & CSS3 to re-create an older version of the page.
 
+**Screenshots**
+
+![alt text](https://github.com/sparkydasrath/media/blob/master/web/websites/mint_login.png "Mint loging page")
+
+
 **Running**
 
 Drag views/index.html into browser

@@ -76,5 +76,6 @@ typings/
 # Serverless directories
 .serverless
 
+.nyc_output
 
 # End of https://www.gitignore.io/api/node

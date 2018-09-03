@@ -1,8 +1,27 @@
 # Crypto Compare
+## Building a simple BTC price grabber with Electron + Typescript + React + Webpack
 
-## Building a simple BTC price grabber with Electron + Typescript + React + Webpack: v3
+The original basis for this comes from the [YouTube electron tutorial](https://www.youtube.com/watch?v=2RxHQoiDctI) written in vanilla JS.  
 
-This version extends from the previous one and use another API call to get a full object and not just price. This is used to build up the screen with multiple components with pure CSS. It also does price ticking color changes.
+I wanted to redo this with a couple of different technologies. Being somewhat new to this space, I spent a **lot** of time researching and trying to get all these pieces to work. This may not be the most optimal setup for sure and I welcome feedback on how I can improve bits of it. I ended up following the [most recent guide I found online](https://taraksharma.com/setting-up-electron-typescript-react-webpack/)
+
+The core tech/concepts used here:
+1. Electron (1.6.10)
+2. Typescript (3.0.1)
+3. React (16.4.2)
+4. Webpack (4.16.4)
+5. CSS Grid, Variables
+6. (Ticking updates - use polling instead of subscription)
+
+**Screnshots**
+
+Ticking Prices
+
+![alt text](https://github.com/sparkydasrath/media/blob/master/web/electron/cc01.png "Ticking Price")
+
+Resized
+
+![alt text](https://github.com/sparkydasrath/media/blob/master/web/electron/cc02.png "Resized")
 
 **Running**
 
