@@ -35,14 +35,30 @@ interface ScrewDriver {
     turnScrew(): void;
 }
 
-type SwissArmyKnife = Knife & BottleOpener & ScrewDriver;
 
-function use(tool: SwissArmyKnife) {
-    console.log("\ndoing lots of things from one type")
-    tool.cut();
-    tool.openBottle();
-    tool.turnScrew();
+interface Hammer {
+    hit(): void;
 }
+
+class ToolClass implements Hammer {
+    hit(): void {
+        console.log("Hit it like a hammer")
+    }
+
+}
+
+let mytc = new ToolClass();
+console.log("trying to hit with hammer");
+mytc.hit();
+
+// type SwissArmyKnife = Knife & BottleOpener & ScrewDriver;
+
+// function use(tool: SwissArmyKnife) {
+//     console.log("\ndoing lots of things from one type")
+//     tool.cut();
+//     tool.openBottle();
+//     tool.turnScrew();
+// }
 
 //arrays - using find
 const inventory = [
