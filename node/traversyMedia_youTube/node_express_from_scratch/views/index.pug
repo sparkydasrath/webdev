@@ -1,0 +1,8 @@
+extends layout
+
+block content
+    h1 #{title}
+    hr
+    ul 
+        each val in articles
+            li= val.id + ": " + val.title + " - " + val.body
