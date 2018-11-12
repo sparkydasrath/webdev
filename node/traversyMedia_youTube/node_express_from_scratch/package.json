@@ -9,7 +9,9 @@
   "author": "Meh",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "mongoose": "^5.3.11",
     "pug": "^2.0.3"
   },
   "devDependencies": {
