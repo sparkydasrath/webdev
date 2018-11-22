@@ -1,10 +1,34 @@
 doctype html
 html
     head 
-        title Add Article
+        title Knowledgebase
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
+        link(rel="stylesheet" href="/css/style.css")
     body
-        block content
-        br
-        hr
-        footer
-            p Footer Content in Layout.pug
+        .container
+            nav.navbar.navbar-inverse
+                .container
+                    .navbar-header
+                        button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+                            span.sr-only Toggle navigation
+                            span.icon-bar
+                            span.icon-bar
+                            span.icon-bar
+                        a.navbar-brand(href='#') Knowledgebase
+                    #navbar.collapse.navbar-collapse
+                        ul.nav.navbar-nav
+                            li
+                                a(href='/') Home
+                            li
+                                a(href='/articles/add') Add Article
+        .container
+            != messages("message", locals)
+            block content
+            br
+            hr
+            footer
+                p Footer Content in Layout.pug
+        script(src="https://code.jquery.com/jquery-3.3.1.min.js")
+        script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js")
+        script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
+        script(src="/js/main.js")

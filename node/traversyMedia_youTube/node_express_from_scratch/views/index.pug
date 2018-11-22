@@ -3,6 +3,7 @@ extends layout
 block content
     h1 #{title}
     hr
-    ul 
-        each val in articles
-            li= val.title + " - " + val.body + "(" + val.id  + ")"
+    ul.list-group 
+        each article in articles
+            li.list-group-item
+                a(href="/articles/"+article._id)= article.title

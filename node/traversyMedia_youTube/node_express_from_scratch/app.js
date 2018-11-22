@@ -3,7 +3,11 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const db = mongoose.connection;
-const bodyParser = require("body-parser");
+const bp = require("body-parser");
+const em = require("express-messages");
+const expressValidator = require("express-validator");
+const flash = require("connect-flash");
+const session = require("express-session");
 mongoose.connect(mongoPath);
 
 // init app
@@ -27,6 +31,31 @@ db.on("error", err => {
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
+
+// load bodyparser middleware
+app.use(bp.urlencoded({
+    extended: false
+}));
+app.use(bp.json());
+
+// load express session middleware
+app.set('trust proxy', 1) // trust first proxy
+app.use(session({
+    secret: 'keyboard cat',
+    resave: true,
+    saveUninitialized: true,
+}));
+
+// load express-messages middleware
+app.use(require('connect-flash')());
+app.use((req, res, next) => {
+    res.locals.messages = require("express-messages")(req, res);
+    next();
+});
+
+// set public folder
+app.use(express.static(path.join(__dirname, "public")));
+
 // home route
 app.get("/", (req, res) => {
     // articles from db
@@ -43,20 +72,9 @@ app.get("/", (req, res) => {
 
 });
 
-// add route
-app.get("/articles/add", (req, res) => {
-    res.render("add_article", {
-        title: "Add Article "
-    });
-});
-
-// add POST article route
-app.post("/articles/add", (req, res) => {
-    console.log("submitted");
-    console.log(req.body);
-
-    return;
-});
+// route file
+let articles = require("./routes/articles");
+app.use("/articles", articles);
 
 // start server
 app.listen(port, () => {
