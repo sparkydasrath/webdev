@@ -15,11 +15,14 @@ body {
   margin: 2em;
 }
 
-body,
 input[type="text"],
 button {
-  color: #888;
+  color: #FF252525;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+body {
+  background-color: #444;
 }
 
 * {
