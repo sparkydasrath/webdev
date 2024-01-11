@@ -1,4 +1,4 @@
-import { TodoItem } from "./todoItem";
+import { TodoItem } from "./todoItem.js";
 
 
 // v1 before using map
@@ -70,6 +70,13 @@ import { TodoItem } from "./todoItem";
 } */
 
 // v3 add getTodoItems() to display a list of items optionally filtered to exclude completed tasks
+// v4 add getItemCounts() and type that describes the items in the collection.
+
+type ItemCounts = {
+    total: number,
+    incomplete: number
+}
+
 export class TodoCollection {
     private nextId: number = 1;
     private itemMap = new Map<number, TodoItem>();
@@ -108,4 +115,13 @@ export class TodoCollection {
             }
         })
     }
+
+    getItemCounts(): ItemCounts {
+        return {
+            total: this.itemMap.size,
+            incomplete: this.getTodoItems(false).length
+        }
+
+    }
+
 }
