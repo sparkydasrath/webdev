@@ -1,4 +1,3 @@
-"use strict";
 // classic definiton of a class in TypeScript that mirrors c#
 /* export class TodoItem {
     public id: number;
@@ -15,10 +14,8 @@
         console.log(`${this.id}\t${this.task} ${this.complete ? "\t(complete)" : ""}`);
     }
 } */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.TodoItem = void 0;
 // shorthand version of the same class definition that uses pure TypeScript
-class TodoItem {
+export class TodoItem {
     id;
     task;
     complete;
@@ -32,4 +29,3 @@ class TodoItem {
         console.log(`${this.id}\t${this.task} ${this.complete ? "\t(complete)" : ""}`);
     }
 }
-exports.TodoItem = TodoItem;
