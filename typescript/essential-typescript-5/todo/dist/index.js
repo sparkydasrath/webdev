@@ -11,6 +11,13 @@ let todos = [
 let collection = new TodoCollection_1.TodoCollection("Sparky", todos);
 console.clear();
 console.log(`${collection.userName}'s Todo List`);
-let newId = collection.addTodoItem("Go for run");
-let todoItem = collection.getTodoById(newId);
+/* let newId: number = collection.addTodoItem("Go for run");
+let todoItem: TodoItem = collection.getTodoById(newId);
 todoItem?.printDetails();
+*/
+// print all the items
+collection.getTodoItems(true).forEach(item => item.printDetails());
+// clear competed tasks
+collection.removeComplete();
+// print all the items
+collection.getTodoItems(true).forEach(item => item.printDetails());
