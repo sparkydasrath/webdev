@@ -3,3 +3,4 @@ function printMessage(msg) {
     console.log(`Message: ${msg}`);
 }
 printMessage(sum(1, 2, 3, 4, 5).toString());
+//# sourceMappingURL=index.js.map

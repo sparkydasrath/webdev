@@ -1,18 +1,12 @@
 {
     "compilerOptions": {
         "forceConsistentCasingInFileNames": true,
+        "strict": true,
         "target": "ES2022",
         "outDir": "./dist",
         "rootDir": "./src",
-        "strict": true,
         "noEmitOnError": true,
-        "sourceMap": true,
-        "module": "ES2022"
-    },
-    "include": [
-        "src"
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+        "module": "Node16",
+        "sourceMap": true
+    }
 }
