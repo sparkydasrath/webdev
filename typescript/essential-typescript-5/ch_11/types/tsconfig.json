@@ -7,11 +7,12 @@
     "outDir": "./dist", /* Specify an output folder for all emitted files. */
     "forceConsistentCasingInFileNames": true, /* Ensure that casing is correct in imports. */
     "strict": true, /* Enable all strict type-checking options. */
-    "noImplicitAny": true, /* Enable error reporting for expressions and declarations with an implied 'any' type. */
+    //"noImplicitAny": true, /* Enable error reporting for expressions and declarations with an implied 'any' type. */
     "declaration": true,
-    "strictNullChecks": true, /* When type checking, take into account 'null' and 'undefined'. */
-    "noUnusedParameters": true, /* Report errors on unused parameters. */
-    "noUnusedLocals": true, /* Report errors on unused locals. */
-    "noImplicitReturns": true, /* Report error when not all code paths in function return a value. */
+    //"strictNullChecks": true, /* When type checking, take into account 'null' and 'undefined'. */
+    //"noUnusedParameters": true, /* Report errors on unused parameters. */
+    //"noUnusedLocals": true, /* Report errors on unused locals. */
+    //"noImplicitReturns": true, /* Report error when not all code paths in function return a value. */
+    "noUncheckedIndexedAccess": false, /* Include 'undefined' in index signature results */
   }
 }

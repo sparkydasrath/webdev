@@ -1,5 +1,5 @@
+"use strict";
 // CLASSES & INTERFACES
-
 /* type Person = {
     id: string,
     name: string,
@@ -27,7 +27,6 @@ Employee.prototype.writeDept = function () {
 
 let salesEmployee = new Employee("fvega", "Fidel Vega", "Sales", "Paris");
  */
-
 // USING CLASSES
 /* type Person = {
     id: string,
@@ -68,40 +67,35 @@ data.forEach(item => {
         console.log(`${item.id} ${item.name}, ${item.city}`);
     }
 }); */
-
 // ACCESS CONTROL
 class Employee {
-    public id: string;
-    public name: string;
-    private dept: string;
-    public city: string;
-
-    constructor(id: string, name: string, dept: string, city: string) {
+    id;
+    name;
+    dept;
+    city;
+    constructor(id, name, dept, city) {
         this.id = id;
         this.name = name;
         this.dept = dept;
         this.city = city;
     }
-
     writeDept() {
         console.log(`${this.name} works in ${this.dept}`);
     }
 }
-
 class Employee2 {
-    public id: string;
-    public name: string;
-    #dept: string;
-    public city: string;
-
-    constructor(id: string, name: string, dept: string, city: string) {
+    id;
+    name;
+    #dept;
+    city;
+    constructor(id, name, dept, city) {
         this.id = id;
         this.name = name;
         this.#dept = dept;
         this.city = city;
     }
-
     writeDept() {
         console.log(`${this.name} works in ${this.#dept}`);
     }
 }
+//# sourceMappingURL=index.js.map
