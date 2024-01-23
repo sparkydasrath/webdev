@@ -70,6 +70,7 @@ data.forEach(item => {
 }); */
 
 // ACCESS CONTROL
+/* 
 class Employee {
     public id: string;
     public name: string;
@@ -88,6 +89,8 @@ class Employee {
     }
 }
 
+// DEFINE & ASSIGN CONSTRUCTOR PARAMETERS
+// VERBOSE CONSTRUCTOR PARAMETERS
 class Employee2 {
     public id: string;
     public name: string;
@@ -100,8 +103,31 @@ class Employee2 {
         this.#dept = dept;
         this.city = city;
     }
+}
 
-    writeDept() {
-        console.log(`${this.name} works in ${this.#dept}`);
+//  BETTER
+class Person {
+    constructor(public id: string, public name: string,
+        public city: string) { }
+}
+class Employee3 extends Person {
+    constructor(public readonly id: string, public name: string,
+        private dept: string, public city: string) {
+        super(id, name, city);
+    }
+} */
+
+// INTERFACES
+interface Person {
+    name: string;
+    getDetails(): string;
+}
+
+class Employee implements Person {
+    constructor(public id: string, public name: string,
+        private dept: string, public city: string) { }
+
+    getDetails() {
+        return `${this.name} works in ${this.dept}`;
     }
 }
