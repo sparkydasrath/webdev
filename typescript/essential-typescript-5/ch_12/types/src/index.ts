@@ -9,15 +9,29 @@ let products = [new Product("Running Shoes", 100), new Product("Hat", 25)];
 [...people, ...products].forEach(item =>
     console.log(`Item: ${item.name}`));
 
-class DataCollection<T> {
+class DataCollection<T extends (Person | Product)> {
     private items: T[] = [];
     constructor(initialItems: T[]) {
         this.items.push(...initialItems);
     }
-    add(newItem: T) {
-        this.items.push(newItem);
+    getNames(): string[] {
+        return this.items.map(item => item.name);
     }
-    getItem(index: number): T {
-        return this.items[index];
+}
+
+class DataCollection2<T extends { name: string }> {
+    private items: T[] = [];
+    constructor(initialItems: T[]) {
+        this.items.push(...initialItems);
+    }
+}
+
+class SearchableCollection extends DataCollection2<Employee> {
+    constructor(initialItems: Employee[]) {
+        super(initialItems);
+    }
+    find(searchTerm: string): Employee[] {
+        return this.items.filter(item =>
+            item.name === searchTerm || item.role === searchTerm);
     }
 }
