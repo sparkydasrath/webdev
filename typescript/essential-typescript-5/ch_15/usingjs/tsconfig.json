@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "target": "ES2022",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "module": "Node16",
+    "allowJs": true,
+    "checkJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "*": [
+        "types/*.d.cts",
+        "types/*.d.mts",
+        "types/*.d.ts"
+      ]
+    },
+  }
+}
