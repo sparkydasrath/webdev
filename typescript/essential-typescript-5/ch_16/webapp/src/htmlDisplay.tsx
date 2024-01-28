@@ -1,4 +1,5 @@
-import { Product, Order } from './data/entities';
+import { createElement } from "./tools/jsxFactory";
+import { Product, Order } from "./data/entities";
 
 export class HtmlDisplay {
     props: {

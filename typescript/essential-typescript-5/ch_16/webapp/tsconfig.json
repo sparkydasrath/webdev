@@ -4,6 +4,8 @@
     "strict": false,
     "target": "es2022",
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "jsx": "react",
+    "jsxFactory": "createElement"
   }
 }
