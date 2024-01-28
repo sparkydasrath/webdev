@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "target": "es2022",
+    "outDir": "./dist",
+    "rootDir": "./src"
+  }
+}
