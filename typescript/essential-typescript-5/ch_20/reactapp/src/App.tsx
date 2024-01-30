@@ -1,7 +1,8 @@
-import React, { FunctionComponent, useState } from 'react';
-import { Product, ProductSelection, ProductSelectionMutations }
-  from './data/entities';
+import React, { FunctionComponent } from 'react';
+import { Product } from './data/entities';
 import { ProductList } from './productList';
+import { useAppDispatch, useAppSelector, reducers }
+  from "./data/dataStore";
 
 let testData: Product[] = [1, 2, 3, 4, 5].map(num =>
 ({
@@ -11,14 +12,11 @@ let testData: Product[] = [1, 2, 3, 4, 5].map(num =>
 
 export const App: FunctionComponent = () => {
 
-  const [selections, setSelections] = useState(Array<ProductSelection>());
+  const selections = useAppSelector(state => state.selections);
+  const dispatch = useAppDispatch();
 
-  const addToOrder = (product: Product, quantity: number) => {
-    setSelections(curr => {
-      ProductSelectionMutations.addProduct(curr, product, quantity);
-      return [...curr];
-    });
-  };
+  const addToOrder = (p: Product, q: number) =>
+    dispatch(reducers.addToOrder([p, q]));
 
   const categories = [...new Set(testData.map(p => p.category))];
 
