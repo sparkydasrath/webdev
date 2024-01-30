@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FunctionComponent, useState } from 'react';
+import { Product, ProductSelection, ProductSelectionMutations }
+  from './data/entities';
+import { ProductList } from './productList';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+let testData: Product[] = [1, 2, 3, 4, 5].map(num =>
+({
+  id: num, name: `Prod${num}`, category: `Cat${num % 2}`,
+  description: `Product ${num}`, price: 100
+}))
+
+export const App: FunctionComponent = () => {
+
+  const [selections, setSelections] = useState(Array<ProductSelection>());
+
+  const addToOrder = (product: Product, quantity: number) => {
+    setSelections(curr => {
+      ProductSelectionMutations.addProduct(curr, product, quantity);
+      return [...curr];
+    });
+  };
+
+  const categories = [...new Set(testData.map(p => p.category))];
+
+  return <div className="App">
+    <ProductList products={testData}
+      categories={categories}
+      selections={selections}
+      addToOrder={addToOrder} />
+  </div>
 }
 
 export default App;
