@@ -17,7 +17,7 @@
     "express-messages": "^1.0.1",
     "express-session": "^1.15.6",
     "express-validator": "^5.3.0",
-    "mongoose": "^5.3.11",
+    "mongoose": "^5.7.5",
     "pug": "^2.0.3"
   },
   "devDependencies": {
