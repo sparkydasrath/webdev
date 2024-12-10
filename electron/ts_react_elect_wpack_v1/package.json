@@ -5,7 +5,7 @@
   "dependencies": {
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
-    "react-scripts-ts": "2.16.0",
+    "react-scripts-ts": "4.0.8",
     "tslint-config-airbnb": "^5.9.2"
   },
   "main": "./dist/main.js",
@@ -31,11 +31,11 @@
     "css-loader": "^1.0.0",
     "electron": "^2.0.6",
     "file-loader": "^1.1.11",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^5.5.0",
     "node-sass": "^4.9.2",
     "rimraf": "^2.6.2",
     "sass-loader": "^7.1.0",
-    "source-map-loader": "^0.2.3",
+    "source-map-loader": "^0.2.4",
     "style-loader": "^0.21.0",
     "tslint-loader": "^3.6.0",
     "typescript": "^3.0.1",
